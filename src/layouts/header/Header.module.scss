@@ -1,0 +1,127 @@
+@import '../../App.scss';
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 45px 0 80px 0;
+
+  @media (max-width: 600px) {
+    align-items: center;
+    width: 96%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: .075em;
+    line-height: .9em;
+    text-transform: uppercase;
+
+    @media (max-width: 600px) {
+      font-size: 2rem;
+      grid-column-start: 2;
+      grid-column-end: 10;
+      margin: 0;
+    }
+
+  }
+
+  .Nav {
+    width: 100%;
+
+    @media (max-width: 600px) {
+      display: none;
+    }
+
+    .NavContainer {
+      margin: 0 auto;
+      width: 300px;
+      display: flex;
+      justify-content: space-between;
+      // display: grid;
+      // grid-template-columns: repeat(3, auto);
+      // grid-column-gap: 100px;
+      justify-content: space-between;
+      @include font-stack('Proxima Nova');
+      font-weight: 600;
+      font-style: normal;
+      font-size: .8rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+
+      .NavItem {
+        text-align: center;
+
+        .NavLink {
+          color: lighten($font-color, 35%);
+          transition: all ease-in-out 0.2s;
+
+          &:hover {
+            color: $font-color;
+          }
+        }
+
+        .DropContainer {
+          position: absolute;
+
+          .DropMenu {
+            padding-top: 10px;
+            position: relative;
+            width: 100%;
+            // display: none;
+            flex-flow: column;
+            text-align: center;
+
+            .DropItem {
+
+              .DropLink {
+                color: lighten($font-color, 35%);
+                transition: all ease-in-out 0.2s;
+
+                &:hover {
+                  color: $font-color;
+                }
+              }
+            }
+          }
+
+          &.Show {
+            display: block;
+          }
+
+          &.Close {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.MenuIcon {
+  display: none;
+  // align-items: center;
+
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+    padding-bottom: 10px;
+  }
+
+  @media (max-width: 600px) {
+    display: flex;
+  }
+}

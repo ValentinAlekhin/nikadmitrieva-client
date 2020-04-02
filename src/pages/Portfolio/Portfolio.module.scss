@@ -1,0 +1,23 @@
+@import '../../App.scss';
+
+.PortfolioContainer {
+  border-top: 1px solid lighten($font-color, 80%);
+  width: 96%;
+  margin: 0 auto;
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 20px;
+  @media (min-width: 600px)  {
+    width: 90%;
+    margin: 0 auto 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1280px)  {
+    width: 80%;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 2560px)  {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

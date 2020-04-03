@@ -28,8 +28,23 @@ class Routes {
     return this.nav
   }
 
+  getSidenavNameAndRouts() {
+    const arr = []
+
+    this.nav.forEach(el => {
+      if (el.dropMenu) {
+        el.dropMenu.forEach(dropEl => arr.push(dropEl))
+      } else {
+        arr.push(el)
+      }
+    })
+
+    return arr
+  }
+
 }
 
 const routes =new Routes()
 
 export default routes
+

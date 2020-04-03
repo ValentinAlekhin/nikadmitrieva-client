@@ -3,16 +3,17 @@ import {NavLink} from 'react-router-dom'
 import classes from './Header.module.scss'
 import MenuIMG from './menu.svg'
 import Routs from '../../store/Routs'
+import Sidenav from '../../components/Sidenav/Sidenav'
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       logoTitle: 'Ника Дмитриева',
       showDropMenu: false,
-      sidebarOpen: false,
+      sidenavOpen: false,
+      sidenavTitles: Routs.getSidenavNameAndRouts(),
       menuTitles: Routs.getNavNameAndRouts()
     }
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
   
   
@@ -23,15 +24,17 @@ export default class Header extends Component {
     })
   }
 
-  onSetSidebarOpen = open => {
-    this.setState({ sidebarOpen: open });
+  toggleMenuHandler = () => {
+    this.setState({
+      sidenavOpen: !this.state.sidenavOpen
+    })
   }
 
   render() {
     return (
       <header className={classes.Header}>
         <div className={classes.MenuIcon}>
-          <img onClick={this.onSetSidebarOpen.bind(this, true)} src={MenuIMG} alt="menu"/>
+          <img onClick={this.toggleMenuHandler} src={MenuIMG} alt="menu"/>
         </div>
         <h1>
           <NavLink to="/">{this.state.logoTitle}</NavLink>
@@ -54,6 +57,12 @@ export default class Header extends Component {
             ))}
            </ul>
         </nav>
+        
+        <Sidenav 
+          isOpen={this.state.sidenavOpen} 
+          titles={this.state.sidenavTitles}
+          onClose={this.toggleMenuHandler}
+        />
       </header>
     )
   }

@@ -113,15 +113,13 @@
 
 .MenuIcon {
   display: none;
-  // align-items: center;
 
   img {
     width: 1.4rem;
     height: 1.4rem;
-    padding-bottom: 10px;
   }
 
   @media (max-width: 600px) {
-    display: flex;
+    display: block;
   }
 }

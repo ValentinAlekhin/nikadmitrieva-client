@@ -1,0 +1,17 @@
+@import '../../App.scss';
+
+.Contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a {
+    @include font-stack('Proxima Nova');
+    color: #000;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 1rem;
+    letter-spacing: .2em;
+    line-height: 1.5em;
+    text-transform: uppercase;
+  }
+}

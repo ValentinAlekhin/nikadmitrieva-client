@@ -4,6 +4,10 @@
   margin: 0 15px;
   border-top: 1px solid lighten($font-color, 80%);
 
+  @media (min-width: 1280px) {
+    margin: 0 10%;
+  }
+
   .Title {
     font-weight: 400;
     font-style: normal;

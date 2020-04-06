@@ -8,11 +8,15 @@ class WorskStorage {
         works: {
           outline: {
             title: 'Наброски',
-            data: 7
+            data: 9
           },
           pleinAirDraw: {
             title: 'Пленер',
-            data: 5
+            data: 6
+          },
+          stillLifeDraw: {
+            title: 'Натюрморты',
+            data: 3
           },
 
         }
@@ -22,15 +26,15 @@ class WorskStorage {
         works: {
           stillLife: {
             title: 'Натюрморты',
-            data: 7
+            data: 8
           },
           pleinAir: {
             title: 'Пленер',
-            data: 8
+            data: 9
           },
           flowers: {
             title: 'Цветы',
-            data: 9
+            data: 12
           }
         } 
       },
@@ -55,7 +59,7 @@ class WorskStorage {
           },
           katya: {
             title: 'Катя',
-            data: 8,
+            data: 9,
           },
           fata: {
             title: 'Фата',
@@ -72,6 +76,10 @@ class WorskStorage {
           love: {
             title: 'Любовь',
             data: 10 
+          },
+          mother: {
+            title: 'Мама',
+            data: 2
           }
         },  
       },

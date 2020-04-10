@@ -1,5 +1,3 @@
-// import * from '../img'
-// console.log(worksStorage.getC)
 class WorskStorage {
   constructor() {
     this.portfolio = {
@@ -104,7 +102,6 @@ class WorskStorage {
   getPortfolioCardsByCategory(category) {
     return (
       Object.entries(this.portfolio[category].works).map(([key, card]) => {
-        // console.log(key)
         return ({
           title: card.title,
           img: require(`../img/${category}/${key}/0.jpg`),
@@ -146,23 +143,25 @@ class WorskStorage {
       route: `/${page}`,
       title,
       page,
+      category,
       imgArr: this.getImgArr(category, page, data)
     }))
   }
 
   getIndexPageCards(...params) {
-    return this.allGalleries.filter(({title}) => {
-      let ok = null
-      params.forEach(par => {
-        if (par === title) return ok = true
+    const cards = []
+    params.forEach(([title, category], index) => {
+      this.getGallaries().forEach(card => {
+        if (title === card.title && category === card.category) {
+          return cards[index] = card
+        }
       })
-      return ok
     })
+
+    return cards
   }
 }
 
 const worksStorage = new WorskStorage();
-
-console.log(worksStorage.getIndexPageCards('Наброски', 'Натюрморты', 'Цветы', 'Натюрморт с бутылкой', 'Фата', 'Пыль', 'Офорт', 'Композиция', 'Пленер'))
 
 export default worksStorage;

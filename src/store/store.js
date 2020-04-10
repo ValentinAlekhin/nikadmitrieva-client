@@ -6,7 +6,7 @@ class WorskStorage {
         works: {
           outline: {
             title: 'Наброски',
-            data: 9
+            data: 10
           },
           pleinAirDraw: {
             title: 'Пленер',
@@ -14,7 +14,7 @@ class WorskStorage {
           },
           stillLifeDraw: {
             title: 'Натюрморты',
-            data: 3
+            data: 5
           },
 
         }
@@ -28,7 +28,7 @@ class WorskStorage {
           },
           pleinAir: {
             title: 'Пленер',
-            data: 9
+            data: 13
           },
           flowers: {
             title: 'Цветы',
@@ -78,6 +78,10 @@ class WorskStorage {
           mother: {
             title: 'Мама',
             data: 2
+          },
+          father: {
+            title: 'Папа',
+            data: 5
           }
         },  
       },
@@ -91,6 +95,10 @@ class WorskStorage {
           composition: {
             title: 'Композиция',
             data: 4
+          },
+          copy: {
+            title: 'Копии',
+            data: 5
           }
         }
       }     

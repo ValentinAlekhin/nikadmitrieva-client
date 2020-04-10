@@ -77,7 +77,7 @@ class WorskStorage {
           },
           mother: {
             title: 'Мама',
-            data: 2
+            data: 6
           },
           father: {
             title: 'Папа',
@@ -99,7 +99,11 @@ class WorskStorage {
           copy: {
             title: 'Копии',
             data: 5
-          }
+          },
+          sculpture: {
+            title: 'Скульптуры',
+            data: 4
+          },
         }
       }     
     }

@@ -15,12 +15,21 @@ export default class Header extends Component {
       menuTitles: Routs.getNavNameAndRouts()
     }
   }
-  
-  
 
   toggleDropMenu = () => {
     this.setState({
       showDropMenu: !this.state.showDropMenu
+    })
+  }
+
+  dropMenuOn = () => {
+    this.setState({
+      showDropMenu: true
+    })
+  }
+  dropMenuOff = () => {
+    this.setState({
+      showDropMenu: false
     })
   }
 
@@ -45,10 +54,15 @@ export default class Header extends Component {
               dropMenu ? <NavMenuItem 
                 link={route} 
                 title={title} 
-                key={index} 
+                key={index}
+                dropMenuOn={this.dropMenuOn}
                 toggleDropMenu={this.toggleDropMenu}
                 children={
-                  <DropMenu showDropMenu={this.state.showDropMenu} dropMenuTitles= {dropMenu}/>
+                  <DropMenu 
+                    showDropMenu={this.state.showDropMenu} 
+                    dropMenuTitles={dropMenu}
+                    dropMenuOff={this.dropMenuOff}
+                  />
                 }/> :
               <NavMenuItem 
                 link={route} 
@@ -63,6 +77,7 @@ export default class Header extends Component {
           titles={this.state.sidenavTitles}
           onClose={this.toggleMenuHandler}
         />
+
       </header>
     )
   }
@@ -72,6 +87,7 @@ const NavMenuItem = props => (
   <li 
     className={classes.NavItem}
     onClick={props.toggleDropMenu}
+    onMouseEnter={props.dropMenuOn}
   >
     <NavLink 
       className={classes.NavLink}
@@ -92,8 +108,8 @@ const DropMenu = props => {
   }
 
   return (
-    <div className={cls.join(' ')}>
-      <ul className={classes.DropMenu} onClick={props.toggleDropMenu}>
+    <div className={cls.join(' ')} onMouseLeave={props.dropMenuOff}>
+      <ul className={classes.DropMenu} onClick={props.dropMenuOff}>
         { props.dropMenuTitles.map(({route, title}, index) => (
           <li className={classes.DropItem} key={index}>
             <NavLink className={classes.DropLink} to={route}>

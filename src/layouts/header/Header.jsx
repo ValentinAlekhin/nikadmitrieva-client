@@ -89,13 +89,25 @@ const NavMenuItem = props => (
     onClick={props.toggleDropMenu}
     onMouseEnter={props.dropMenuOn}
   >
-    <NavLink 
-      className={classes.NavLink}
-      to={props.link}
-    >
-      {props.title}
-    </NavLink>
-      { props.children }
+
+    {
+      props.link 
+        ? <NavLink 
+            className={classes.NavLink}
+            to={props.link}
+          >
+            {props.title}
+          </NavLink>
+          : <React.Fragment>
+            <span 
+              className={classes.NavLink}
+            >
+              {props.title}
+            </span>
+              { props.children }
+            </React.Fragment>
+    }
+
   </li>
 )
 

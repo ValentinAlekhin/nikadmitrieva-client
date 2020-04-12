@@ -12,7 +12,7 @@ class Routes {
       },
       {
         title: 'Портфолио',
-        route: '#',
+        route: '',
         page: null,
         dropMenu: Store.getPortfolioNamesAndRouts()
       },

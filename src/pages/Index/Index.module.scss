@@ -6,6 +6,10 @@
 
   .Parallax {
     height: 200px;
+
+    @media (min-width: 1280px) {
+      height: 320px;
+    }
   }
 
   .CardsContainer {

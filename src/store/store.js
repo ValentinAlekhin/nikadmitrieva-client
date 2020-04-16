@@ -2,7 +2,7 @@ class WorskStorage {
   constructor() {
     this.portfolio = {
       drawing: {
-        title: 'Рисунок',
+        title: 'Графика',
         works: {
           outline: {
             title: 'Наброски',
@@ -13,14 +13,14 @@ class WorskStorage {
             data: 6
           },
           stillLifeDraw: {
-            title: 'Натюрморты',
+            title: 'Академический рисунок',
             data: 5
           },
 
         }
       },
       painting: {
-        title: 'Живопись', 
+        title: 'Акварель', 
         works: {
           stillLife: {
             title: 'Натюрморты',

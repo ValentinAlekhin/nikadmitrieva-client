@@ -33,7 +33,11 @@ class WorskStorage {
           flowers: {
             title: 'Цветы',
             data: 12
-          }
+          },
+          portraits: {
+            title: 'Портреты',
+            data: 5
+          },
         } 
       },
       photo: {
@@ -64,8 +68,8 @@ class WorskStorage {
             data: 9,
           },
           christmas: {
-            title: 'Рождество',
-            data: 4,
+            title: 'Гирлянды',
+            data: 3,
           },
           dust: {
             title: 'Пыль',
@@ -77,11 +81,11 @@ class WorskStorage {
           },
           mother: {
             title: 'Мама',
-            data: 6
+            data: 3
           },
           father: {
             title: 'Папа',
-            data: 5
+            data: 2
           }
         },  
       },
@@ -98,7 +102,7 @@ class WorskStorage {
           },
           copy: {
             title: 'Копии',
-            data: 5
+            data: 4
           },
           sculpture: {
             title: 'Скульптуры',

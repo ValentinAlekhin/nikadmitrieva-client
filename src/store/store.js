@@ -116,7 +116,7 @@ class WorskStorage {
       Object.entries(this.portfolio[category].works).map(([key, card]) => {
         return ({
           title: card.title,
-          img: require(`../img/${category}/${key}/0.jpg`),
+          img: require(`../data/compressed/${category}/${key}/0.jpg`),
           link: `/${key}`
         })
       })
@@ -126,7 +126,7 @@ class WorskStorage {
   getImgArr(category, title, data) {
     const galleryArr = []
     for (let i = 0; i < data; i++) {
-      galleryArr[i] = require(`../img/${category}/${title}/${i}.jpg`)
+      galleryArr[i] = require(`../data/compressed/${category}/${title}/${i}.jpg`)
     }
     return galleryArr
   }

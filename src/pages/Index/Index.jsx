@@ -43,5 +43,5 @@ export default class Index extends Component {
 function getRandomParallaxImg(min, max) {
   // случайное число от min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
-  return require(`../../img/parallax/${Math.floor(rand)}.jpg`);
+  return require(`../../data/compressed/parallax/${Math.floor(rand)}.jpg`);
 }

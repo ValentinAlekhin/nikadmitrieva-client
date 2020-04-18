@@ -1,14 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import {BrowserRouter} from 'react-router-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import * as serviceWorker from './serviceWorker'
+import { BrowserRouter } from 'react-router-dom'
+import { RootState } from './context/rootContext'
 
 const Application = (
-  <BrowserRouter>
-    <App/>
-  </BrowserRouter>
+  <RootState>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
+  </RootState>
 )
 
 ReactDOM.render(

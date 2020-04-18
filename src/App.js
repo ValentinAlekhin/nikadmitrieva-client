@@ -2,7 +2,7 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.scss';
 import 'normalize.css'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Store from './store/store'
 import Header from './layouts/header/Header'
 import Footer from './layouts/footer/Footer'
@@ -21,28 +21,15 @@ function App() {
 
   return (
     <div onContextMenu={turnOfContextMenu} className="App">
-      <Header/>
-      <Route path="/" exact component={Index}/>
-      <Route path="/contact" component={Contact}/>
-      <Route path="/about" component={About}/>
-      { Store.getPortfolioNamesAndRouts().map(({route, page}, index) => {
-        return (
-        <Route key={index} path={route}>
-          <Portfolio cards={Store.getPortfolioCardsByCategory(page)}/>
-        </Route>
-        )
-      }) }
 
-      { Store.allGalleries.map(({route, title, imgArr}, index) => {
-        return (
-          <Route key={index} path={route}>
-            <Gallery title={title} imgArr={imgArr}/>
-          </Route>
-        )
-      }) }
-      {/* <Route path="/dust">
-        <Gallery title="Пыль" imgArr={Store.getGalleryByCategoryAndTitle('photo', 'dust')}/>
-      </Route> */}
+      <Header/>
+      <Switch>
+        <Route path="/" exact component={Index}/>
+        <Route path="/contact" component={Contact}/>
+        <Route path="/about" component={About}/>
+        <Route path="/"/>
+      </Switch>
+      
       <Footer/>
     </div>
   );

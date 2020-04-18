@@ -4,10 +4,11 @@
   display: inline-block;
   margin: 0 auto;
   width: fit-content;
-  padding: 14px 35px;
+  padding: 12px 30px;
   border: 2px solid #222;
   @include font-stack('Proxima Nova');
   border-radius: 3px;
+  font-size: 0.9rem;
   font-weight: 600;
   font-style: normal;
   text-transform: uppercase;

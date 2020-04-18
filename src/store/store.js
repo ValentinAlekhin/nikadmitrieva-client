@@ -127,7 +127,8 @@ class WorskStorage {
     )
   }
 
-  getImgArr(category, title, data) {
+  getImgArr(category, title) {
+    const data = this.portfolio[category].works[title].data
     const galleryArr = []
     for (let i = 0; i < data; i++) {
       galleryArr[i] = require(`../data/compressed/${category}/${title}/${i}.jpg`)

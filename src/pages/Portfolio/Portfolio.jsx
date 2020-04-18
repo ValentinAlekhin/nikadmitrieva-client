@@ -1,17 +1,21 @@
 import React from 'react'
 import classes from './Portfolio.module.scss'
+import store from '../../store/store'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 
 export default props => {
 
+  const category = props.match.params.category
+  const cards = store.getPortfolioCardsByCategory(category)
+
   return (
     <div className={classes.PortfolioContainer}>
-      { props.cards.map(({title, img, link}, index) => (
+      { cards.map(({title, img, link}, index) => (
         <GalleryCard
           key={index}
           title={title}
           img={img}
-          link={link}
+          link={`${category}${link}`}
         />
       ))}
     </div>

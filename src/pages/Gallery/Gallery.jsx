@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classes from './Gallery.module.scss'
+import store from '../../store/store'
 import GalleryItem from '../../components/GalleryItem/GalleryItem'
 
 export default class Gallery extends Component {
@@ -7,6 +8,10 @@ export default class Gallery extends Component {
     super(props)
     this.state = {
       colls: this.setColls(),
+      imgArr: store.getImgArr(
+        props.match.params.category,
+        props.match.params.gallery
+      )
     }
   }
 
@@ -45,23 +50,22 @@ export default class Gallery extends Component {
 
   createColl = (currenColl) => {
     let coll = []
-    for (let i = currenColl; i < this.props.imgArr.length; i+= this.state.colls) {
-      coll[i] = <GalleryItem key={i} img={this.props.imgArr[i]}/>
+    for (let i = currenColl; i < this.state.imgArr.length; i+= this.state.colls) {
+      coll[i] = <GalleryItem key={i} img={this.state.imgArr[i]}/>
     }
 
     return coll
   }
 
   render() {
-    console.log(this.state.colls)
     return (
       <div className={classes.Gallery}>
-      <h4 className={classes.Title}>
-        { this.props.title }
-      </h4>
-      <div className={classes.Grid}>
-        { this.createColls() }
-      </div>
+        <h4 className={classes.Title}>
+          { this.props.title }
+        </h4>
+        <div className={classes.Grid}>
+          { this.createColls() }
+        </div>
     </div>
     )
   }

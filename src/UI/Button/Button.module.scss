@@ -22,6 +22,10 @@
     background-color: #222;
   }
 
+  &:focus {
+    outline: none;
+  }
+
   &:disabled {
     border-color: rgb(170, 170, 170);
     color: rgb(170, 170, 170);

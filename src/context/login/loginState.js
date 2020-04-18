@@ -6,7 +6,7 @@ import { HIDE_LOGIN, SHOW_LOGIN } from '../types'
 export const LoginSate = ({children}) => {
 
   const initialState = {
-    isOpen: false,
+    isOpen: true,
   }
 
   const [state, dispatch] = useReducer(LoginReducer, initialState)

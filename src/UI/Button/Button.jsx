@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Button.module.scss'
 
-export default ({text, disabled}) => {
+export default ({text, disabled, onClick}) => {
 
   const cls = [classes.Button]
 
@@ -11,6 +11,7 @@ export default ({text, disabled}) => {
     <button 
       className={cls.join(' ')}
       disabled={disabled}
+      onClick={onClick}
     >
       { text }
     </button>

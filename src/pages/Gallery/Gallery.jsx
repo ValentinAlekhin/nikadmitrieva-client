@@ -20,7 +20,6 @@ export default class Gallery extends Component {
 
     window.addEventListener('resize', () => {
       this.setState({ colls: this.setColls() })
-      console.log(this.state.colls)
     })
   }
 

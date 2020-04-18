@@ -51,26 +51,4 @@
     resize: none;
     }
   }
-
-  button {
-    display: inline-block;
-    margin: 0 auto;
-    width: fit-content;
-    padding: 14px 35px;
-    border: 2px solid #222;
-    @include font-stack('Proxima Nova');
-    border-radius: 3px;
-    font-weight: 600;
-    font-style: normal;
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    background-color: #fff;
-    cursor: pointer;
-    transition: 0.1s background-color linear, 0.1s color linear;
-
-    &:hover {
-      color: #fff;
-      background-color: #222;
-    }
-  }
 }

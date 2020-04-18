@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import classes from './Form.module.scss';
+import Button from '../../UI/Button/Button';
 
 export default class Form extends Component {
   constructor(props) {
@@ -19,15 +20,12 @@ export default class Form extends Component {
         action="https://formspree.io/xzbajwoa"
         method="POST"
       >
-        <div className={classes.Email}>
-          <label>Почта</label>
-          <input type="email" name="email" />
-        </div>
+        
         <div className={classes.Message}>
           <label>Сообщение</label>
           <textarea type="text" name="message" />
         </div>
-        {status === "SUCCESS" ? <p>Спасибо!</p> : <button>Отправить</button>}
+        {status === "SUCCESS" ? <p>Спасибо!</p> : <Button text="Отправить" disabled={false}/>}
         {status === "ERROR" && <p>Упс, что-то пошло не так.</p>}
       </form>
     );

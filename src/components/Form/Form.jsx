@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import classes from './Form.module.scss';
-import Button from '../../UI/Button/Button';
+import classes from './Form.module.scss'
+import Button from '../../UI/Button/Button'
+import Input from '../../UI/Input/Input'
 
 export default class Form extends Component {
   constructor(props) {
@@ -20,12 +21,29 @@ export default class Form extends Component {
         action="https://formspree.io/xzbajwoa"
         method="POST"
       >
-        
+
+        <Input 
+          type="email"
+          label="Почта"
+          placeholder="Введите вашу почту"
+        />
+
+        <Input 
+          textaria={true}
+          type="text"
+          label="Сообщение"
+          placeholder="Введите вашу сообщение"
+        />
+
+        {/* <div className={classes.Email}>
+          <label>Почта</label>
+          <input type="email" name="email" />
+        </div>
         <div className={classes.Message}>
           <label>Сообщение</label>
           <textarea type="text" name="message" />
-        </div>
-        {status === "SUCCESS" ? <p>Спасибо!</p> : <Button text="Отправить" disabled={false}/>}
+        </div> */}
+        {status === "SUCCESS" ? <p>Спасибо!</p> : <Button text="Отправить" />}
         {status === "ERROR" && <p>Упс, что-то пошло не так.</p>}
       </form>
     );

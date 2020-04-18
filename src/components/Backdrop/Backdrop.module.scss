@@ -6,4 +6,19 @@
   left: 0;
   bottom: 0;
   right: 0;
+
+  &.enter {
+    opacity: 0;
+  }
+  &.enter-active {
+    opacity: 1;
+    transition: opacity 220ms;
+  }
+  &.exit {
+    opacity: 1;
+  }
+  &.exit-active {
+    opacity: 0;
+    transition: opacity 220ms;
+  }
 }

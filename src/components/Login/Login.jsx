@@ -7,7 +7,7 @@ import Button from '../../UI/Button/Button'
 
 export default (props) => {
 
-  const { hide, show, isOpen } = useContext(LoginContext)
+  const { hide, isOpen } = useContext(LoginContext)
 
   if(!isOpen) return null
 
@@ -32,7 +32,11 @@ export default (props) => {
         </form>
       </div>
 
-      { isOpen ? <Backdrop onClick={hide}/> : null }
+      <Backdrop 
+        onClick={hide}
+        timeout={1000}
+        show={isOpen}
+        />
     </Fragment>
   )
 }

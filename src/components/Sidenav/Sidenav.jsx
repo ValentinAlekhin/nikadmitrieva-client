@@ -23,7 +23,11 @@ const Sidenav = props => {
           )) }
         </ul>
       </div>
-      { props.isOpen ? <Backdrop onClick={props.onClose}/> : null }
+      <Backdrop 
+        onClick={props.onClose}
+        show={props.isOpen}
+        timeout={1000}
+      />
     </React.Fragment>
   )
 }

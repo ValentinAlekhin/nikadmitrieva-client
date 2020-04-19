@@ -2,8 +2,6 @@ import React from 'react'
 import classes from './Backdrop.module.scss'
 import { CSSTransition } from 'react-transition-group'
 
-console.log({...classes})
-
 const classNames={
   enter: classes.enter,
   enterActive: classes['enter-active'],

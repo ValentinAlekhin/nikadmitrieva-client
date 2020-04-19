@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classes from './Input.module.scss'
 
-export default ({label, placeholder, type, name, disabled, textaria}) => {
-
-  const [value, setValue] = useState('')
+export default ({
+  label, placeholder, type, 
+  name, disabled, textaria, 
+  value, onChange 
+}) => {
 
   const id = Math.random()
 
@@ -23,7 +25,7 @@ export default ({label, placeholder, type, name, disabled, textaria}) => {
           placeholder={placeholder || ''}
           value={value}
           disabled={disabled}
-          onChange={e => setValue(e.target.value)}
+          onChange={onChange}
           style={{height: 150}}
         />
         : <input 
@@ -33,7 +35,7 @@ export default ({label, placeholder, type, name, disabled, textaria}) => {
             placeholder={placeholder || ''}
             value={value}
             disabled={disabled}
-            onChange={e => setValue(e.target.value)}
+            onChange={onChange}
           /> }
 
       

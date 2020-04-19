@@ -157,7 +157,7 @@ class WorskStorage {
 
   getGallaries() {
     return this.getAllWorks().map(({page, category, data, title}) => ({
-      route: `/${page}`,
+      route: `/${category}/${page}`,
       title,
       page,
       category,

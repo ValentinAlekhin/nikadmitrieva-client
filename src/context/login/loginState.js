@@ -10,9 +10,9 @@ import Axios from 'axios'
 export const LoginSate = ({children}) => {
 
   const initialState = {
-    isOpen: true,
+    isOpen: false,
     loading: false,
-    isLogin: false,
+    isLogin: true,
   }
 
   const [state, dispatch] = useReducer(LoginReducer, initialState)

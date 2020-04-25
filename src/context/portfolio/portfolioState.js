@@ -1,8 +1,11 @@
 import React, { useReducer } from 'react'
-import { LoginContext } from '../login/loginContext'
-import { PortfolioReducer } from './potfolioReducer'
-import { LOADING_START_P, LOADING_END_P, GET_PORTFOLIO_PAGE } from '../types'
+import { PortfolioContext } from './portfolioContext'
+import { PortfolioReducer } from './portfolioReducer'
+import { 
+  LOADING_START_P, LOADING_END_P, GET_PORTFOLIO_PAGE 
+} from '../types'
 import Axios from 'axios'
+
 
 export const PortfolioState = ({children}) => {
 
@@ -36,11 +39,11 @@ export const PortfolioState = ({children}) => {
   }
 
   return (
-    <LoginContext.Provider value={{
+    <PortfolioContext.Provider value={{
       state, loadingEndP, loadingStartP,
       getPortfolioPage
     }} >
       { children }
-    </LoginContext.Provider>
+    </PortfolioContext.Provider>
   )
 }

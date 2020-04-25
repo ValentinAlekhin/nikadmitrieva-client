@@ -48,8 +48,6 @@ export default ({category}) => {
 
       const { id } = cardResponse.data
 
-      console.log(id)
-
       let imgData = new formData()
       imgData.append('img', state.img, id)
 
@@ -62,8 +60,6 @@ export default ({category}) => {
           'Content-Type': `multipart/form-data; boundary=${imgData._boundary}`,
         }
       })
-
-      console.log(cardResponse, imgResponse)
 
       setState({
         ...state,

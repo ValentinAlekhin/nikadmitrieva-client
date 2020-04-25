@@ -1,3 +1,3 @@
 import { createContext } from 'react'
 
-export const potfolioContext = createContext()
+export const PotfolioContext = createContext()

@@ -24,7 +24,7 @@ export default props => {
         />
       ))}
 
-      { isLogin && <AddGalleryCard /> }
+      { isLogin && <AddGalleryCard category={category}/> }
     </div>
   )
 }

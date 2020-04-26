@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import { LoginContext } from '../../context/login/loginContext'
+// import { PortfolioContext } from '../../context/portfolio/portfolioContext'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
 import { getPage } from '../../redux/portfolio/portfolioAction'
@@ -14,6 +15,8 @@ const Portfolio = ({
   const category = match.params.category
 
   const { isLogin } = useContext(LoginContext)
+  // const { state, getPortfolioPage } = useContext(PortfolioContext)
+
 
   useEffect(() => {
     (async function() {

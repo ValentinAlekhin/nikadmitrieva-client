@@ -1,13 +1,13 @@
 import React, { useReducer } from 'react'
-import { LoginContext } from '../login/loginContext'
-import { PortfolioReducer } from './potfolioReducer'
+import { PortfolioReducer } from './portfolioReducer'
 import { LOADING_START_P, LOADING_END_P, GET_PORTFOLIO_PAGE } from '../types'
 import Axios from 'axios'
+import { PortfolioContext } from './portfolioContext'
 
 export const PortfolioState = ({children}) => {
 
   const initialState = {
-    loading: false,
+    loading: true,
     data: null,
   }
 
@@ -19,16 +19,19 @@ export const PortfolioState = ({children}) => {
   const getPortfolioPage = async category => {
     loadingStartP()
     try {
-      const response = await Axios.post('/api/category/get', category)
+      console.log(state)
+      const response = await Axios.post('/api/category/get', {category})
       
       const data = response.data
 
-      loadingEndP()
+      console.log(data)
 
       dispatch({
         type: GET_PORTFOLIO_PAGE,
         payload: data
       })
+
+      console.log(state)
     } catch (err) {
       loadingEndP()
       console.log(err)
@@ -36,11 +39,11 @@ export const PortfolioState = ({children}) => {
   }
 
   return (
-    <LoginContext.Provider value={{
+    <PortfolioContext.Provider value={{
       state, loadingEndP, loadingStartP,
       getPortfolioPage
     }} >
       { children }
-    </LoginContext.Provider>
+    </PortfolioContext.Provider>
   )
 }

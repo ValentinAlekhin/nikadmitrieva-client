@@ -1,6 +1,6 @@
 import React from 'react'
 import { LoginSate } from "./login/loginState"
-import { PortfolioState } from './portfolio/potfolioState'
+import { PortfolioState } from './portfolio/portfolioState'
 
 export const RootState = ({children}) => (
   <PortfolioState>

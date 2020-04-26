@@ -5,6 +5,7 @@ export const PortfolioReducer = (state, action) => {
     case GET_PORTFOLIO_PAGE:
       return {
         ...state,
+        loading: false,
         data: action.payload
       }
     case LOADING_START_P:

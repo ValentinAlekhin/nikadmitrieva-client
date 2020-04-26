@@ -1,7 +1,7 @@
 import { 
   LOADING_START_P, LOADING_END_P, FETCH_PAGE_SUCCESS, 
   FETCH_PAGE_ERROR,
-} from "../actionTypes"
+} from "./actionTypes"
 
 const initialState = {
   loading: true,

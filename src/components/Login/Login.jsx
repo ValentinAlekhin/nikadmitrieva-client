@@ -1,12 +1,15 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment } from 'react'
 import classes from './Login.module.scss'
 import Backdrop from '../Backdrop/Backdrop'
-import { LoginContext } from '../../context/login/loginContext'
 import Input from '../../UI/Input/Input'
 import Button from '../../UI/Button/Button'
 import { useState } from 'react'
+import { connect } from 'react-redux'
+import { auth, hideLogin } from '../../redux/login/loginAction'
 
-export default props => {
+const Login = ({
+  auth, isOpen, hideLogin, loading
+}) => {
 
   const initialState = {
     email: '',
@@ -14,8 +17,6 @@ export default props => {
   }
 
   const [ inputs, setInputs ] = useState(initialState)
-
-  const { hide, isOpen, auth, loading } = useContext(LoginContext)
 
   const onSubmit = e => {
     e.preventDefault()
@@ -59,10 +60,26 @@ export default props => {
       </div>
 
       <Backdrop 
-        onClick={hide}
+        onClick={hideLogin}
         timeout={1000}
         show={isOpen}
         />
     </Fragment>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    isOpen: state.login.isOpen,
+    loading: state.login.loading,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    auth: (login, password) => dispatch(auth(login, password)),
+    hideLogin: () => dispatch(hideLogin())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

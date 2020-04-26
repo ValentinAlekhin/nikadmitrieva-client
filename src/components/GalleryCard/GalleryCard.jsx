@@ -33,11 +33,14 @@ export default class GalleryCard extends Component {
   }
 
   render() {
-
     return (
       <div className={classes.GalleryCard}>
         <NavLink ref={this.myInput} className={classes.ImgContainer} to={this.props.link} style={this.state.ImgContainerSize}>
-          <img className={classes.ImgItem} src={this.props.img} alt={this.props.title}/>
+          <picture className={classes.ImgItem}>
+            <source srcSet={this.props.img.webp} type="image/webp"/>
+            <source srcSet={this.props.img.jpg} type="image/jpg"/>
+            <img className={classes.ImgItem} src={this.props.img.jpg} alt={this.props.title}/>
+          </picture>
         </NavLink>
         <NavLink className={classes.GalerryTitle} to={this.props.link}>
           <span>

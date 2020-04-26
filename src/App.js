@@ -14,7 +14,7 @@ import Login from './components/Login/Login'
 
 function App() {
   const turnOfContextMenu = e => {
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   return (

@@ -26,6 +26,7 @@ export const useAxios = () => {
       setLoading(false)
       throw err
     }
+    // eslint-disable-next-line
   }, [loading])
 
   const clearEror = useCallback(() => {

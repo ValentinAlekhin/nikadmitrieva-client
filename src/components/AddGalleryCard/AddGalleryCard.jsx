@@ -2,16 +2,12 @@ import React from 'react'
 import classes from './AddGalleryCard.module.scss'
 import whiteImg from './white.png'
 import { useState } from 'react'
-import formData from 'form-data'
-import { useAxios } from '../../hooks/axiosHook'
+import { connect } from 'react-redux'
+import { addCard } from '../../redux/portfolio/portfolioAction'
 
-export default ({category}) => {
-
-  const { request } = useAxios()
+const AddGalleryCard = ({ category, addCard }) => {
 
   const initialState = {
-    category,
-    loading: false,
     title: '',
     img: null
   }
@@ -32,48 +28,9 @@ export default ({category}) => {
     })
   }
 
-  const addCard = async () => {
-    setState({
-      ...state,
-      loading: true
-    })
-
-    const cardData = {
-      category: state.category,
-      title: state.title,
-    }
-
-    try {
-      const cardResponse = await request('api/category/add-card', 'POST', cardData)
-
-      const { id } = cardResponse.data
-
-      let imgData = new formData()
-      imgData.append('img', state.img, id)
-
-      const imgResponse = await request('api/category/add-title-img',
-      'POST',
-      imgData, {
-        headers: {
-          'accept': 'application/json',
-          'Accept-Language': 'en-US,en;q=0.8',
-          'Content-Type': `multipart/form-data; boundary=${imgData._boundary}`,
-        }
-      })
-
-      setState({
-        ...state,
-        loading: false
-      })
-
-    } catch (err) {
-      setState({
-        ...state,
-        loading: false
-      })
-
-      console.log(err)
-    } 
+  const onClickHandler = async () => {
+    const { title, img } = state
+    await addCard(category, title, img) 
   }
 
   return (
@@ -94,7 +51,15 @@ export default ({category}) => {
           onChange={onTitleChange}
         />
       </div>
-      <button onClick={addCard}>Добавить</button>
+      <button onClick={onClickHandler}>Добавить</button>
     </div>
   )
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addCard: (category, title, img) => dispatch(addCard(category, title, img))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(AddGalleryCard)

@@ -4,8 +4,6 @@ import classes from './Header.module.scss'
 import MenuIMG from './menu.svg'
 import Routs from '../../store/Routs'
 import Sidenav from '../../components/Sidenav/Sidenav'
-import { connect } from 'react-redux'
-import { setCategory } from '../../redux/portfolio/portfolioAction'
 export default class Header extends Component {
   constructor(props) {
     super(props);

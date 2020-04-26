@@ -1,15 +1,8 @@
 import Axios from 'axios'
 import { 
   LOADING_START_P, LOADING_END_P, FETCH_PAGE_SUCCESS, 
-  FETCH_PAGE_ERROR, SET_CATEGORY,
+  FETCH_PAGE_ERROR,
 } from '../actionTypes'
-
-export function setCategory(category) {
-  return {
-    type: SET_CATEGORY,
-    category
-  }
-}
 
 export function loadingStart() {
   return {

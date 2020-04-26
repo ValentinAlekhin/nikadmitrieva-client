@@ -6,7 +6,10 @@ import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
 import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
 
-const Portfolio = ({data, error, loading, match, getPage, setCategory}) => {
+const Portfolio = ({
+  data, error, loading, 
+  match, getPage
+}) => {
 
   const category = match.params.category
 
@@ -14,12 +17,10 @@ const Portfolio = ({data, error, loading, match, getPage, setCategory}) => {
 
   useEffect(() => {
     (async function() {
-      // await getPage(category)
+      await getPage(category)
     })()
-    setCategory(category)
-
     // eslint-disable-next-line
-  }, [])
+  }, [category])
 
   return (
     <div className={classes.PortfolioContainer}>
@@ -51,7 +52,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPage: category => dispatch(getPage(category)),
-    setCategory: category => dispatch(setCategory(category))
   }
 }
 

@@ -6,7 +6,7 @@ import Routs from '../../store/Routs'
 import Sidenav from '../../components/Sidenav/Sidenav'
 import { connect } from 'react-redux'
 import { setCategory } from '../../redux/portfolio/portfolioAction'
-class Header extends Component {
+export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +64,6 @@ class Header extends Component {
                     showDropMenu={this.state.showDropMenu} 
                     dropMenuTitles={dropMenu}
                     dropMenuOff={this.dropMenuOff}
-                    onClick={this.props.setCategory}
                   />
                 }/> :
               <NavMenuItem 
@@ -129,7 +128,6 @@ const DropMenu = props => {
           <li 
             className={classes.DropItem} 
             key={index}
-            onClick={props.onClick(route)}
           >
             <NavLink className={classes.DropLink} to={route}>
               { title }
@@ -140,11 +138,3 @@ const DropMenu = props => {
     </div>
   )
 }
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setCategory: category => dispatch(setCategory(category)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Header)

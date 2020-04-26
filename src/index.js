@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker'
 import { BrowserRouter } from 'react-router-dom'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { RootState } from './context/rootContext'
 import rootReducer from './redux/rootReducer'
 import thunk from 'redux-thunk'
 
@@ -26,11 +25,9 @@ const store = createStore(
 
 const Application = (
   <Provider store={store}>
-    <RootState>
-      <BrowserRouter>
-        <App/>
-      </BrowserRouter>
-    </RootState>
+    <BrowserRouter>
+      <App/>
+    </BrowserRouter>
   </Provider>
 )
 

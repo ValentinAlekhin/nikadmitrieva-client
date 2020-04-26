@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, Fragment } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
-import { LoginContext } from '../../context/login/loginContext'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
 import { getPage } from '../../redux/portfolio/portfolioAction'
 
 const Portfolio = ({
   data, error, loading, 
-  match, getPage
+  match, getPage, isLogin
 }) => {
 
   const category = match.params.category
-
-  const { isLogin } = useContext(LoginContext)
 
   useEffect(() => {
     (async function() {
@@ -57,6 +54,7 @@ function mapStateToProps(state) {
     data: state.portfolio.data,
     loading: state.portfolio.loading,
     error: state.portfolio.error,
+    isLogin: state.login.isLogin
   }
 }
 

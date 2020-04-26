@@ -4,7 +4,7 @@ import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import { LoginContext } from '../../context/login/loginContext'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
-import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
+import { getPage } from '../../redux/portfolio/portfolioAction'
 
 const Portfolio = ({
   data, error, loading, 

@@ -1,16 +1,22 @@
 import { 
   LOADING_START_P, LOADING_END_P, FETCH_PAGE_SUCCESS, 
-  FETCH_PAGE_ERROR,
+  FETCH_PAGE_ERROR, SET_CATEGORY,
 } from "./actionTypes"
 
 const initialState = {
   loading: true,
+  category: '',
   data: [],
   error: null
 }
 
 export const PortfolioReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CATEGORY:
+      return {
+        ...state,
+        category: action.category
+      }
     case FETCH_PAGE_SUCCESS:
       return {
         ...state,

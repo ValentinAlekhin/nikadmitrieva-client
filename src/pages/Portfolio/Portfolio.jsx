@@ -3,21 +3,23 @@ import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
-import { getPage } from '../../redux/portfolio/portfolioAction'
+import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
 
 const Portfolio = ({
   data, error, loading, 
-  match, getPage, isLogin
+  match, getPage, isLogin,
+  setCategory, category
 }) => {
 
-  const category = match.params.category
+  const cat = match.params.category
 
   useEffect(() => {
     (async function() {
-      await getPage(category)
+      await getPage(cat)
     })()
+    setCategory(cat)
     // eslint-disable-next-line
-  }, [category])
+  }, [cat])
 
   return (
     <div className={classes.PortfolioContainer}>
@@ -26,12 +28,13 @@ const Portfolio = ({
         ? <p>Loading</p>
         : isLogin
           ? <Fragment>
-            { data.map(({title, imgUrl, galleryUrl}, index) => (
+            { data.map(({ title, imgUrl, galleryUrl, _id }, index) => (
               <GalleryCard
                 key={index}
                 title={title}
                 img={imgUrl}
                 link={galleryUrl}
+                id={_id}
               />
             )) }
           <AddGalleryCard category={category}/>
@@ -51,6 +54,7 @@ const Portfolio = ({
 
 function mapStateToProps(state) {
   return {
+    category: state.portfolio.category,
     data: state.portfolio.data,
     loading: state.portfolio.loading,
     error: state.portfolio.error,
@@ -61,6 +65,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPage: category => dispatch(getPage(category)),
+    setCategory: category => dispatch(setCategory(category)),
   }
 }
 

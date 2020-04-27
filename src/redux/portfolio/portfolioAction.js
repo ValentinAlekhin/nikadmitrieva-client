@@ -1,9 +1,11 @@
 import Axios from 'axios'
 import { 
   LOADING_START_P, LOADING_END_P, FETCH_PAGE_SUCCESS, 
-  FETCH_PAGE_ERROR,
+  FETCH_PAGE_ERROR, SET_CATEGORY,
 } from './actionTypes'
 import formData from 'form-data'
+
+export const setCategory = category => ({ type: SET_CATEGORY, category })
 
 export const loadingStart = () => ({ type: LOADING_START_P })
 
@@ -51,6 +53,21 @@ export const addCard = (category, title, img) => {
       await dispatch(getPage(category))
     } catch (err) {
       dispatch(loadingEnd())
+    }
+  }
+}
+
+export const removeCard = id => {
+  return async (dispatch, getState) => {
+    dispatch(loadingStart())
+
+    try {
+      await Axios.post('api/category/remove', { id })
+      const category = getState().category
+      dispatch(getPage(category))
+    } catch (err) {
+      dispatch(loadingEnd())
+      console.log(err)
     }
   }
 }

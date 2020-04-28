@@ -7,7 +7,7 @@ import AddImg from '../../components/AddImg/AddImg'
 import { useEffect } from 'react'
 
 const Gallery = ({
-  gallery: { images, title, description },
+  data: { images, title, description },
   loading, isLogin, match, getPage
 }) => {
 
@@ -33,6 +33,7 @@ const Gallery = ({
         { title }
       </h4>
       <div className={classes.Grid}>
+        { images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>) }
         { isLogin && <AddImg category={propsCategory} gallery={propsGallery} /> }
       </div>
     </div>
@@ -42,7 +43,7 @@ const Gallery = ({
 function mapStateToProps(state) {
   return {
     loading: state.gallery.loading,
-    gallery: state.gallery.gallery,
+    data: state.gallery.data,
     isLogin: state.login.isLogin,
   }
 }

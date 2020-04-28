@@ -3,9 +3,7 @@ import {
 } from "./actionTypes"
 
 const initialState = {
-  category: '',
-  id: null,
-  gallery: {},
+  data: {},
   loading: true,
   error: null,
 }
@@ -15,7 +13,7 @@ export const GallaryReducer = (state = initialState, action) => {
     case FETCH_GALLERY_SUCCESS:
       return {
         ...state,
-        gallery: action.data,
+        data: action.data,
         loading: false,
       }
     case FETCH_GALLERY_ERROR:

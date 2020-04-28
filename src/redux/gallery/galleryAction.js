@@ -51,3 +51,16 @@ export const addImg = (category, gallery, images) => {
     }
   }
 }
+
+export const removeImg = id => {
+  return async (dispatch, getState) => {
+    dispatch(loadingStart())
+    try {
+      const { category, titleUrl, _id } = getState().gallery.data
+      await Axios.post('/api/gallery/remove-img', { id, galleryId: _id, category, titleUrl })
+      dispatch(getPage(category, titleUrl))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}

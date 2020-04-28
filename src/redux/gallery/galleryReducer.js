@@ -15,12 +15,14 @@ export const GallaryReducer = (state = initialState, action) => {
     case FETCH_GALLERY_SUCCESS:
       return {
         ...state,
-        gallery: action.data
+        gallery: action.data,
+        loading: false,
       }
     case FETCH_GALLERY_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
+        loading: false,
       }
     case LOADING_START_G:
       return {

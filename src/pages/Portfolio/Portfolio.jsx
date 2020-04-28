@@ -28,11 +28,11 @@ const Portfolio = ({
         ? <p>Loading</p>
         : isLogin
           ? <Fragment>
-            { data.map(({ title, imgUrl, galleryUrl, _id }, index) => (
+            { data.map(({ title, path, galleryUrl, _id }, index) => (
               <GalleryCard
                 key={index}
                 title={title}
-                img={imgUrl}
+                img={path}
                 link={galleryUrl}
                 id={_id}
               />

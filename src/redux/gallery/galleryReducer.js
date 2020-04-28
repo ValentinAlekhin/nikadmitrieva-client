@@ -4,8 +4,9 @@ import {
 
 const initialState = {
   category: '',
+  id: null,
   gallery: {},
-  loading: false,
+  loading: true,
   error: null,
 }
 

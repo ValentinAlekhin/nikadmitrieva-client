@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
 import classes from './Gallery.module.scss'
-import store from '../../store/store'
 import GalleryItem from '../../components/GalleryItem/GalleryItem'
+import { connect } from 'react-redux'
+import { getPage } from '../../redux/gallery/galleryAction'
 
-export default class Gallery extends Component {
+class Gallery extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      colls: this.setColls(),
-      imgArr: store.getImgArr(
-        props.match.params.category,
-        props.match.params.gallery
-      )
+      // colls: this.setColls(),
     }
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0)
 
-    window.addEventListener('resize', () => {
-      this.setState({ colls: this.setColls() })
-    })
+    // window.scrollTo(0, 0)
+
+    const { category, gallery } = this.props.match.params
+
+    this.props.getPage(category, gallery)
+
+    // window.addEventListener('resize', () => {
+    //   this.setState({ colls: this.setColls() })
+    // })
   }
 
   setColls() {
@@ -57,15 +59,35 @@ export default class Gallery extends Component {
   }
 
   render() {
+
+    if(this.props.loading) return <p>Loading</p>
+
     return (
       <div className={classes.Gallery}>
         <h4 className={classes.Title}>
           { this.props.title }
         </h4>
         <div className={classes.Grid}>
+
           { this.createColls() }
         </div>
     </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    loading: state.gallery.loading,
+    gallery: state.gallery.gallery,
+    isLogin: state.login.isLogin,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPage: (category, title) => dispatch(getPage(category, title))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery)

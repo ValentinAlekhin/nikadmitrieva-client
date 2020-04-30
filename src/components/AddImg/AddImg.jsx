@@ -1,18 +1,11 @@
 import React from 'react'
 import classes from './AddImg'
-import { useState } from 'react'
 import { connect } from 'react-redux'
 import { addImg } from '../../redux/gallery/galleryAction'
 
 const AddImg = ({ 
   addImg, category, gallery
 }) => {
-
-  // const initialState = {
-  //   images: []
-  // }
-
-  // const [state, setState] = useState(initialState)
 
   let images = []
 
@@ -21,7 +14,6 @@ const AddImg = ({
   }
 
   const onButtonClickHandler = async () => {
-    console.log('click', images)
     await addImg(category, gallery, images)
   }
 

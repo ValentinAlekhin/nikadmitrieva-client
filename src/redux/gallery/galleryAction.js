@@ -1,7 +1,11 @@
 import Axios from "axios"
 import { 
   LOADING_START_G, LOADING_END_G, FETCH_GALLERY_SUCCESS,
-  FETCH_GALLERY_ERROR, SET_GALLERY_ID
+  FETCH_GALLERY_ERROR, SET_GALLERY_ID, SET_COLLS, SET_GAP, 
+  SET_COLL_WITDTH, SET_IMAGES, SET_CONTAINER_WITDTH, 
+  SET_WINDOW_WITDTH,
+  SET_COLLS_HEIGHT,
+
 } from "./actionTypes"
 import FormData from 'form-data'
 
@@ -22,6 +26,7 @@ export const getPage = (category, gallery) => {
       const response = await Axios.post('/api/gallery/get', { category, titleUrl: gallery })
 
       dispatch(fetchGallerySuccess(response.data.gallery))
+      dispatch(setImages())
     } catch (err) {
       dispatch(fetchGalleryError(err))
     }
@@ -62,5 +67,104 @@ export const removeImg = id => {
     } catch (err) {
       console.log(err)
     }
+  }
+}
+
+//Grid
+
+const setWindowWitdth = witdth => ({ type: SET_WINDOW_WITDTH, witdth })
+
+const setContainerWitdth = witdth => ({ type: SET_CONTAINER_WITDTH, witdth })
+
+const setColls = () => {
+  return (dispatch, getState) => {
+    const { windowWitdth } = getState().gallery.grid
+    let numderOfColls
+    switch (true) {
+      case windowWitdth <= 600:
+        numderOfColls = 1
+        break
+      case windowWitdth <= 1280:
+        numderOfColls = 2
+        break
+      case windowWitdth <= 1920:
+        numderOfColls = 3
+        break
+      default:
+        numderOfColls = 4
+    }
+
+    dispatch({
+      type: SET_COLLS,
+      numderOfColls
+    })
+  }
+}
+
+const setGap = gap => ({ type: SET_GAP, gap })
+
+const setCollWitdth = () => {
+  return (dispatch, getState) => {
+    const { containerWitdth, gap, colls } = getState().gallery.grid
+    let width = containerWitdth / colls
+    if (colls > 1) width -= gap
+
+    dispatch({
+      type: SET_COLL_WITDTH,
+      width
+    })
+  }
+}
+
+const setCollsHeight = height => ({ type: SET_COLLS_HEIGHT, height })
+
+export const setImages = () => {
+  return (dispatch, getState) => {
+    const { data: { images }, grid } = getState().gallery
+
+    if (!images) return dispatch({ type: SET_IMAGES, images: [] })
+
+    const { colls, collWidth, gap } = grid
+    const collsHeight = Array(colls).fill(0)
+    let currentColl = 0
+
+    const nextImages = images
+      .sort((a, b) => a.order - b.order)
+      .map(img => {
+
+        const width = collWidth
+        const aspectRatio = img.sizes.width / img.sizes.height
+        const height  = width / aspectRatio
+
+        const top = collsHeight[currentColl]
+        const left = gap * currentColl + collWidth * currentColl
+
+        collsHeight[currentColl] += height + gap
+        if (currentColl === colls - 1) {
+          currentColl = 0
+        } else currentColl++
+
+        return {
+          ...img, 
+          sizes: { width, height },
+          position: { top, left }
+        }
+      })
+
+    
+
+    dispatch(setCollsHeight(collsHeight.sort((a, b) => b - a)[0]))
+    dispatch({ type: SET_IMAGES, images: nextImages })
+  }
+}
+
+export const createGrid = (windowWitdth, containerWitdth, gap) => {
+  return dispatch => {
+    dispatch(setWindowWitdth(windowWitdth))
+    dispatch(setContainerWitdth(containerWitdth))
+    dispatch(setColls())
+    dispatch(setGap(gap))
+    dispatch(setCollWitdth())
+    dispatch(setImages())
   }
 }

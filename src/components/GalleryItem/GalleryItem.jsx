@@ -6,12 +6,21 @@ import { useState } from 'react'
 import { removeImg } from '../../redux/gallery/galleryAction'
 
 const GalleryItem = ({
-  img, isLogin, removeImg
+  isLogin, removeImg,
+  img: { id, path, sizes, position }
 }) => {
+
   const [show, setShow] = useState(false)
 
   const handleDubleClick = () => {
-    removeImg(img.id)
+    removeImg(id)
+  }
+
+  const style = {
+    top: position.top,
+    left: position.left,
+    width: sizes.width,
+    height: sizes.height
   }
 
   return (
@@ -19,12 +28,13 @@ const GalleryItem = ({
       className={classes.GalleryItem}
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
+      style={style}
     >
       { isLogin && <ImgControlPanel show={show} isLogin={isLogin} onDoubleClick={handleDubleClick}/> }
-      <picture>
-        <source srcSet={img.path.webp} type="image/webp" />
-        <source srcSet={img.path.jpg} type="image/jpg" />
-        <img className={classes.Img} src={img.path.jpg} alt="Gallery Item"/>
+      <picture className={classes.Img}>
+        <source srcSet={path.webp} type="image/webp" />
+        <source srcSet={path.jpg} type="image/jpg" />
+        <img className={classes.Img} src={path.jpg} alt="Gallery Item"/>
       </picture>
     </div>
   )

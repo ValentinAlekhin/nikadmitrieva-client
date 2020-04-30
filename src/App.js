@@ -1,8 +1,7 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.scss';
 import 'normalize.css'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Header from './layouts/header/Header'
 import Footer from './layouts/footer/Footer'
 import Index from './pages/Index/Index'
@@ -29,6 +28,7 @@ function App() {
         <Route path="/about" component={About}/>
         <Route path="/:category" exact component={Portfolio}/>
         <Route path="/:category/:gallery" component={Gallery}/>
+        <Redirect to={'/'}/>
       </Switch>
       
       <Footer/>

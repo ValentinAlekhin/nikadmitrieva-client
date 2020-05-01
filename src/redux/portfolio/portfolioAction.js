@@ -29,16 +29,19 @@ export const getPage = category => {
 }
 
 export const addCard = (category, title, img) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(loadingStart())
+    const { userId, token } = getState().login
 
     const cardData = {
-      category,
-      title,
+      category, title, userId
     }
     try {
-      const cardResponse = await Axios.post('api/category/add-card', cardData)
+      const cardResponse = await Axios.post('api/category/add-card', cardData, { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
 
+      if (cardResponse.status === 401) return
       const { id } = cardResponse.data
 
       let imgData = new formData()
@@ -48,6 +51,7 @@ export const addCard = (category, title, img) => {
         'accept': 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
         'Content-Type': `multipart/form-data; boundary=${imgData._boundary}`,
+        'Authorization': `Bearer ${token} ${userId}`,
       } })
 
       await dispatch(getPage(category))
@@ -60,9 +64,11 @@ export const addCard = (category, title, img) => {
 export const removeCard = id => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
-
+    const { userId, token } = getState().login
     try {
-      await Axios.post('api/category/remove', { id })
+      await Axios.post('api/category/remove', { id, userId }, { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
       const category = getState().category
       dispatch(getPage(category))
     } catch (err) {

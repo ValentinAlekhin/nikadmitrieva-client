@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
 
 const Portfolio = ({
-  data, error, loading, 
+  data, loading, 
   match, getPage, isLogin,
   setCategory, category
 }) => {
@@ -21,6 +21,22 @@ const Portfolio = ({
     // eslint-disable-next-line
   }, [cat])
 
+  const cards = () => {
+    if (!data.length) return <p>Нет данных</p>
+
+    return (
+      data.map(({ title, path, galleryUrl, _id }, index) => (
+        <GalleryCard
+          key={index}
+          title={title}
+          img={path}
+          link={galleryUrl}
+          id={_id}
+        />
+      ))
+    )
+  }
+
   return (
     <div className={classes.PortfolioContainer}>
 
@@ -28,25 +44,11 @@ const Portfolio = ({
         ? <p>Loading</p>
         : isLogin
           ? <Fragment>
-            { data.map(({ title, path, galleryUrl, _id }, index) => (
-              <GalleryCard
-                key={index}
-                title={title}
-                img={path}
-                link={galleryUrl}
-                id={_id}
-              />
-            )) }
-          <AddGalleryCard category={category}/>
-        </Fragment>
-          : data.map(({title, imgUrl, galleryUrl}, index) => (
-            <GalleryCard
-              key={index}
-              title={title}
-              img={imgUrl}
-              link={galleryUrl}
-            />
-          )) }
+            { cards() }
+            <AddGalleryCard category={category}/>
+          </Fragment>
+          : cards() 
+      }
 
     </div>
   )

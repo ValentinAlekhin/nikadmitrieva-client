@@ -28,6 +28,20 @@ const Gallery = ({
     // eslint-disable-next-line
   }, [])
 
+  const grid = () => {
+    if (!images.length) return <p>No data</p>
+
+    return (
+      <div 
+        className={classes.Grid} 
+        ref={containerWitdth}
+        style={{height: collsHeight}}
+      >
+        { images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>) }
+      </div>
+    )
+  }
+
   if(loading) return (
     <div className={classes.Gallery}>
       <p>Загрузка</p>
@@ -41,13 +55,7 @@ const Gallery = ({
         { title }
       </h4>
       { description && <p>{ description }</p> }
-      <div 
-        className={classes.Grid} 
-        ref={containerWitdth}
-        style={{height: collsHeight}}
-      >
-        { images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>) }
-      </div>
+      { grid() }
       { isLogin && <AddImg category={propsCategory} gallery={propsGallery} /> }
     </div>
   )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.scss';
 import 'normalize.css'
 import { Route, Switch, Redirect } from 'react-router-dom'
@@ -10,11 +10,18 @@ import About from './pages/About/About'
 import Portfolio from './pages/Portfolio/Portfolio'
 import Gallery from './pages/Gallery/Gallery'
 import Login from './components/Login/Login'
+import { connect } from 'react-redux';
+import { autoLogin } from './redux/login/loginAction';
 
-function App() {
+const App = ({ autoLogin }) => {
   const turnOfContextMenu = e => {
-    // e.preventDefault();
+    e.preventDefault()
   }
+
+  useEffect(() => {
+    autoLogin()
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <div onContextMenu={turnOfContextMenu} className="App">
@@ -36,4 +43,10 @@ function App() {
   );
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    autoLogin: () => dispatch(autoLogin())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

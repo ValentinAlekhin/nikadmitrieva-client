@@ -34,8 +34,9 @@ export const getPage = (category, gallery) => {
 }
 
 export const addImg = (category, gallery, images) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(loadingStart())
+    const { userId, token } = getState().login
     try {
       const fileName = `${category}_${gallery}`
 
@@ -48,6 +49,7 @@ export const addImg = (category, gallery, images) => {
         'accept': 'application/json',
         'Accept-Language': 'en-US,en;q=0.8',
         'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+        'Authorization': `Bearer ${token} ${userId}`,
       } })
 
       dispatch(getPage(category, gallery))
@@ -60,9 +62,12 @@ export const addImg = (category, gallery, images) => {
 export const removeImg = id => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
+    const { userId, token } = getState().login
     try {
       const { category, titleUrl, _id } = getState().gallery.data
-      await Axios.post('/api/gallery/remove-img', { id, galleryId: _id, category, titleUrl })
+      await Axios.post('/api/gallery/remove-img', { id, galleryId: _id, category, titleUrl }, { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
       dispatch(getPage(category, titleUrl))
     } catch (err) {
       console.log(err)

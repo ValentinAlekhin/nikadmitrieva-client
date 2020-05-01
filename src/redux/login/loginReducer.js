@@ -1,13 +1,14 @@
 import { 
   SHOW_LOGIN, HIDE_LOGIN, LOADING_START_L,
-  LOADING_END_L, LOGOUT, LOGIN
+  LOADING_END_L, LOGOUT, LOGIN, AUTO_LOGIN
 } from "./actionTypes"
 
 const initialState = {
   loading: false,
-  isLogin: true,
+  isLogin: false,
+  isOpen: false,
   token: '',
-  isOpen: false
+  userId: '',
 }
 
 export const LoginReducer = (state = initialState, action) => {
@@ -35,13 +36,24 @@ export const LoginReducer = (state = initialState, action) => {
     case LOGOUT:
       return {
         ...state,
-        isLogin: false
+        isLogin: false,
+        token: '',
+        userId: '',
       }
     case LOGIN:
       return {
         ...state,
-        isLogin: true
+        isLogin: true,
+        token: action.token,
+        userId: action.userId,
       }
+      case AUTO_LOGIN:
+        return {
+          ...state,
+          isLogin: true,
+          token: action.token,
+          userId: action.userId,
+        }
     default:
       return state
   }

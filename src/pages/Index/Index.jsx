@@ -2,22 +2,9 @@ import React, { Component } from 'react'
 import { Parallax } from 'react-parallax'
 import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
-import Store from '../../store/store'
 
 export default class Index extends Component {
-  state = {
-    gallaryCards: Store.getIndexPageCards(
-      ['Копии', 'other'],
-      ['Пленер', 'drawing'],
-      ['Мама', 'photo'], 
-      ['Натюрморты', 'painting'],
-      ['Цветы', 'painting'],
-      ['Папа', 'photo'],
-      ['Натюрморт с бутылкой', 'photo'],
-      ['Пыль', 'photo'],
-      ['Настя', 'photo'],
-     )
-  }
+  
 
   render() {
     return (
@@ -26,14 +13,14 @@ export default class Index extends Component {
            <div className={classes.Parallax} />
         </Parallax>
         <div className={classes.CardsContainer}>
-          { this.state.gallaryCards.map(({route, title, imgArr}, index) => (
+          {/* { this.state.gallaryCards.map(({route, title, imgArr}, index) => (
             <GallaryCard
               key={index}
               title={title}
               img={imgArr[0]}
               link={route}
               />
-          )) }
+          )) } */}
         </div>
       </div>
     )    

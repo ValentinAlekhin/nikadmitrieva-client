@@ -7,16 +7,18 @@
   border-radius: 2px;
   box-shadow: 0 0 5px 1px lighten(#000, 20%);
   z-index: 10;
+  display: flex;
 
   .IcoContainer {
-    display: flex;
+    padding: 5px 3px 2px;
 
     .Ico {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
+      fill: gray;
 
       &:hover {
-        color: red;
+        fill: red;
       }
     }
   }

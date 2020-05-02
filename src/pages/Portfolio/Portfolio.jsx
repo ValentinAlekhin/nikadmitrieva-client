@@ -8,7 +8,7 @@ import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
 const Portfolio = ({
   data, loading, 
   match, getPage, isLogin,
-  setCategory, category
+  setCategory, category,
 }) => {
 
   const cat = match.params.category

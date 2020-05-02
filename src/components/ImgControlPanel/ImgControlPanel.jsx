@@ -1,9 +1,10 @@
 import React from 'react'
 import classes from './ImgControlPanel.module.scss'
-import removeIcon from './Remove.svg'
+import removeIcon from './delete.svg'
+import addToIndexPageIcon from './add_to_index_page.svg'
 
 export default ({ 
-  show, onDoubleClick
+  show, remove, addToIndexPage
 }) => {
 
   const cls = [classes.ImgControlPanel]
@@ -12,14 +13,22 @@ export default ({
 
   return (
     <div className={cls.join(' ')}>
-      <div className={classes.IcoContainer}>
+      { addToIndexPage && <div className={classes.IcoContainer}>
+        <img 
+          className={classes.Ico} 
+          src={addToIndexPageIcon} 
+          alt="addToIndexPage"
+          onDoubleClick={addToIndexPage}
+        />
+      </div> }
+      { remove && <div className={classes.IcoContainer}>
         <img 
           className={classes.Ico} 
           src={removeIcon} 
           alt="remove"
-          onDoubleClick={onDoubleClick}
+          onDoubleClick={remove}
         />
-      </div>
+      </div> }
     </div>
   )
 }

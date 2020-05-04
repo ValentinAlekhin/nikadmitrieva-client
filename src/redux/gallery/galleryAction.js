@@ -19,11 +19,12 @@ export const fetchGallerySuccess = data => ({ type: FETCH_GALLERY_SUCCESS, data 
 
 export const fetchGalleryError = error => ({ type: FETCH_GALLERY_ERROR, error })
 
-export const getPage = (route) => {
-  return async dispatch => {
+export const getPage = () => {
+  return async (dispatch, getState) => {
     dispatch(loadingStart())
-    try {
-      const response = await Axios.post('/api/gallery/get', { route })
+    const [ , category, title ] = getState().mainPages.currentPath.split('/')
+    try { 
+      const response = await Axios.get(`/api/gallery/?category=${category}&title=${title}`)
 
       dispatch(fetchGallerySuccess(response.data.gallery))
       dispatch(setImages())

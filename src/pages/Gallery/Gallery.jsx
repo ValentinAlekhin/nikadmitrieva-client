@@ -2,10 +2,11 @@ import React, { useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import classes from './Gallery.module.scss'
 import { connect } from 'react-redux'
+import { setCurrentPath, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
 import { getPage, createGrid, setImages } from '../../redux/gallery/galleryAction'
 import AddImg from '../../components/AddImg/AddImg'
 import GalleryItem from '../../components/GalleryItem/GalleryItem'
-import { setCurrentPath, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
+import { BarLoader } from 'react-spinners'
 
 const Gallery = ({
   data: { title, description, _id },
@@ -18,8 +19,8 @@ const Gallery = ({
 
   useEffect(() => {
     (async function() {
-      await getPage(loacation.pathname)
       await setPath(loacation.pathname)
+      await getPage()
     })()
     setPage('gallery')
     createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
@@ -47,7 +48,7 @@ const Gallery = ({
 
   if(loading) return (
     <div className={classes.Gallery}>
-      <p>Загрузка</p>
+      <BarLoader css={{ width: '100%' }}/>
       <div className={classes.Grid} ref={containerWitdth}></div>
     </div>
   )

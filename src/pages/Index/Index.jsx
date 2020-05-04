@@ -4,6 +4,7 @@ import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
 import { connect } from 'react-redux'
 import { getIndexPage, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
+import { BarLoader } from 'react-spinners'
 
 const Index = ({
   getPage, page: { cards },
@@ -20,7 +21,7 @@ const Index = ({
 
   if (loading) return (
     <div className={classes.IndexContainer}>
-      <p>Loading</p>
+      <BarLoader css={{ width: '100%' }}/>
     </div>
   )
 

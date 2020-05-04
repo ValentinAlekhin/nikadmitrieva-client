@@ -1,23 +1,27 @@
 import React, { useEffect, Fragment } from 'react'
+import { useLocation } from 'react-router-dom'
 import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
 import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
-import { setCurrentPage } from '../../redux/mainPages/mainPagesAction'
+import { setCurrentPage, setCurrentPath } from '../../redux/mainPages/mainPagesAction'
+import { BarLoader } from 'react-spinners'
 
 const Portfolio = ({
   data, loading, 
   match, getPage, isLogin,
   setCategory, category,
-  setCurrentPage
+  setCurrentPage, setCurrentPath
 }) => {
 
   const cat = match.params.category
+  const location = useLocation()
 
   useEffect(() => {
     (async function() {
-      await getPage(cat)
+      await setCurrentPath(location.pathname)
+      await getPage()
     })()
     setCategory(cat)
     setCurrentPage('portfolio')
@@ -45,12 +49,12 @@ const Portfolio = ({
     <div className={classes.PortfolioContainer}>
 
       { loading
-        ? <p>Loading</p>
+        ? <BarLoader css={{ width: '100%' }}/>
         : isLogin
-          ? <Fragment>
+          ? <div className={classes.CardsContainer}>
             { cards() }
             <AddGalleryCard category={category}/>
-          </Fragment>
+          </div>
           : cards() 
       }
 
@@ -73,6 +77,7 @@ function mapDispatchToProps(dispatch) {
     getPage: category => dispatch(getPage(category)),
     setCategory: category => dispatch(setCategory(category)),
     setCurrentPage: page => dispatch(setCurrentPage(page)),
+    setCurrentPath: path => dispatch(setCurrentPath(path)),
   }
 }
 

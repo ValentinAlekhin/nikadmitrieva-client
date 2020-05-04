@@ -15,11 +15,12 @@ export const fetchPageSuccess = data => ({ type: FETCH_PAGE_SUCCESS, data })
 
 export const fetchPageError = error => ({ type: FETCH_PAGE_ERROR, error })
 
-export const getPage = category => {
-  return async dispatch => {
+export const getPage = () => {
+  return async (dispatch, getState) => {
     dispatch(loadingStart())
+    const [ , category ] = getState().mainPages.currentPath.split('/')
     try {
-      const response = await Axios.post('/api/category/get', {category})
+      const response = await Axios.get(`/api/category/?category=${category}`)
 
       dispatch(fetchPageSuccess(response.data.cards))
     } catch (err) {
@@ -54,7 +55,7 @@ export const addCard = (category, title, img) => {
         'Authorization': `Bearer ${token} ${userId}`,
       } })
 
-      await dispatch(getPage(category))
+      await dispatch(getPage())
     } catch (err) {
       dispatch(loadingEnd())
     }

@@ -1,7 +1,12 @@
-import { LOADING_START_MP, LOADING_END_MP, FETCH_INDEX_PAGE_SUCCESS } from "./actionTypes"
+import { 
+  LOADING_START_MP, LOADING_END_MP, FETCH_INDEX_PAGE_SUCCESS, 
+  SET_CURRENT_PAGE, SET_CURRENT_PATH 
+} from "./actionTypes"
 
 const initialState = {
   loading: true,
+  currentPage: '/',
+  currentPath: '/',
   navigation: {
     sideNavIsOpen: false,
     logoTitle: 'Ника Дмитриева',
@@ -24,6 +29,16 @@ const initialState = {
 
 export const MainPagesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_CURRENT_PATH:
+      return {
+        ...state,
+        currentPath: action.path
+      }
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.page
+      }
     case LOADING_START_MP:
       return {
         ...state,

@@ -1,24 +1,27 @@
 import React, { useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import classes from './Gallery.module.scss'
 import { connect } from 'react-redux'
 import { getPage, createGrid, setImages } from '../../redux/gallery/galleryAction'
 import AddImg from '../../components/AddImg/AddImg'
 import GalleryItem from '../../components/GalleryItem/GalleryItem'
+import { setCurrentPath, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
 
 const Gallery = ({
-  data: { title, description },
-  loading, isLogin, match, getPage,
-  createGrid, images, collsHeight
+  data: { title, description, _id },
+  loading, isLogin, getPage, createGrid, 
+  images, collsHeight, setPath, setPage,
 }) => {
 
-  const propsCategory = match.params.category
-  const propsGallery = match.params.gallery
+  const loacation = useLocation()
   const containerWitdth = useRef(null)
 
   useEffect(() => {
     (async function() {
-      await getPage(propsCategory, propsGallery)
+      await getPage(loacation.pathname)
+      await setPath(loacation.pathname)
     })()
+    setPage('gallery')
     createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
     window.addEventListener('resize', () => {
       console.log('resize')
@@ -56,7 +59,7 @@ const Gallery = ({
       </h4>
       { description && <p>{ description }</p> }
       { grid() }
-      { isLogin && <AddImg category={propsCategory} gallery={propsGallery} /> }
+      { isLogin && <AddImg id={_id} /> }
     </div>
   )
 }
@@ -76,6 +79,8 @@ function mapDispatchToProps(dispatch) {
     getPage: (category, title) => dispatch(getPage(category, title)),
     createGrid: (windowWitdth, containerWitdth, gap) => dispatch(createGrid(windowWitdth, containerWitdth, gap)),
     setImages: () => dispatch(setImages()),
+    setPage: page => dispatch(setCurrentPage(page)),
+    setPath: path => dispatch(setCurrentPath(path)),
   }
 }
 

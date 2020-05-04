@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addImg } from '../../redux/gallery/galleryAction'
 
 const AddImg = ({ 
-  addImg, category, gallery
+  addImg, id
 }) => {
 
   let images = []
@@ -14,7 +14,7 @@ const AddImg = ({
   }
 
   const onButtonClickHandler = async () => {
-    await addImg(category, gallery, images)
+    await addImg(id, images)
   }
 
   return (

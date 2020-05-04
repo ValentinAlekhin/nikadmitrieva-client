@@ -19,11 +19,11 @@ export const fetchGallerySuccess = data => ({ type: FETCH_GALLERY_SUCCESS, data 
 
 export const fetchGalleryError = error => ({ type: FETCH_GALLERY_ERROR, error })
 
-export const getPage = (category, gallery) => {
+export const getPage = (route) => {
   return async dispatch => {
     dispatch(loadingStart())
     try {
-      const response = await Axios.post('/api/gallery/get', { category, titleUrl: gallery })
+      const response = await Axios.post('/api/gallery/get', { route })
 
       dispatch(fetchGallerySuccess(response.data.gallery))
       dispatch(setImages())
@@ -33,16 +33,15 @@ export const getPage = (category, gallery) => {
   }
 }
 
-export const addImg = (category, gallery, images) => {
+export const addImg = (id, images) => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login
+    const route = getState().mainPages.currentPath
     try {
-      const fileName = `${category}_${gallery}`
-
       const formData = new FormData()
       for (let i = 0; i < images.length; i++) {
-        formData.append('images', images[i], `${fileName}_${i}`)
+        formData.append('images', images[i], `${id}_${i}`)
       }
       
       await Axios.post('/api/gallery/add-img', formData, { headers: {
@@ -52,7 +51,7 @@ export const addImg = (category, gallery, images) => {
         'Authorization': `Bearer ${token} ${userId}`,
       } })
 
-      dispatch(getPage(category, gallery))
+      dispatch(getPage(route))
     } catch (err) {
       console.log(err)
     }
@@ -63,12 +62,13 @@ export const removeImg = id => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login
+    const route = getState().mainPages.currentPath
     try {
       const { category, titleUrl, _id } = getState().gallery.data
       await Axios.post('/api/gallery/remove-img', { id, galleryId: _id, category, titleUrl }, { headers: {
         'Authorization': `Bearer ${token} ${userId}`,
       } })
-      dispatch(getPage(category, titleUrl))
+      dispatch(getPage(route))
     } catch (err) {
       console.log(err)
     }

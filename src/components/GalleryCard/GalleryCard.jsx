@@ -4,25 +4,13 @@ import classes from './GalleryCard.module.scss'
 import { connect } from 'react-redux'
 import { useState } from 'react'
 import ImgControlPanel from '../ImgControlPanel/ImgControlPanel'
-import { removeCard } from '../../redux/portfolio/portfolioAction'
-import { addCardToIndexPage } from '../../redux/mainPages/mainPagesAction'
 
 const GalleryCard = ({
   img, link, title, 
-  isLogin, id, removeCard,
-  addCardToIndexPage
+  isLogin, id
 }) => {
 
   const [hover, setHover] = useState(false)
-
-  const removeCardHandler = () => {
-    removeCard(id)
-  }
-
-  const addCardHandler = () => {
-    console.log('handler')
-    addCardToIndexPage(id)
-  }
 
   return (
     <div 
@@ -33,8 +21,6 @@ const GalleryCard = ({
       { isLogin && <ImgControlPanel 
         show={hover} 
         id={id}
-        remove={removeCardHandler}
-        addToIndexPage={addCardHandler}
       /> }
       <NavLink 
         className={classes.ImgContainer} 
@@ -58,14 +44,8 @@ const GalleryCard = ({
 function mapStateToProps(state) {
   return {
     isLogin: state.login.isLogin,
+    page: state.mainPages.currentPage,
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    removeCard: id => dispatch(removeCard(id)),
-    addCardToIndexPage: id => dispatch(addCardToIndexPage(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(GalleryCard)
+export default connect(mapStateToProps)(GalleryCard)

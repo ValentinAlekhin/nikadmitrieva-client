@@ -62,6 +62,7 @@ export const addCard = (category, title, img) => {
 }
 
 export const removeCard = id => {
+  console.log('port')
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login

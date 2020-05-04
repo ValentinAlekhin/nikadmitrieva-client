@@ -3,17 +3,18 @@ import { Parallax } from 'react-parallax'
 import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
 import { connect } from 'react-redux'
-import { getIndexPage } from '../../redux/mainPages/mainPagesAction'
+import { getIndexPage, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
 
 const Index = ({
   getPage, page: { cards },
-  loading
+  loading, setCurrentPage
 }) => {
   
   useEffect(() => {
     (async function() {
       await getPage()
     })()
+    setCurrentPage('index')
     // eslint-disable-next-line
   }, [])
 
@@ -29,12 +30,13 @@ const Index = ({
           <div className={classes.Parallax} />
       </Parallax>
       <div className={classes.CardsContainer}>
-        { cards.map(({galleryUrl, title, path}, index) => (
+        { cards.map(({route, title, titleImg, _id}, index) => (
           <GallaryCard
             key={index}
             title={title}
-            img={path}
-            link={galleryUrl}
+            img={titleImg}
+            link={route}
+            id={_id}
             />
         )) }
       </div>
@@ -52,6 +54,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPage: () => dispatch(getIndexPage()),
+    setCurrentPage: page => dispatch(setCurrentPage(page)),
   }
 }
 

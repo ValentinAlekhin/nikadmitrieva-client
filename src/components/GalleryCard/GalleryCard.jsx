@@ -44,7 +44,7 @@ const GalleryCard = ({
 function mapStateToProps(state) {
   return {
     isLogin: state.login.isLogin,
-    page: state.mainPages.currentPage,
+    page: state.navigation.currentPage,
   }
 }
 

@@ -4,7 +4,7 @@ import removeIcon from './icons/delete.svg'
 import addToIndexPageIcon from './icons/add_to_index_page.svg'
 import { connect } from 'react-redux'
 import { removeCard } from '../../redux/portfolio/portfolioAction'
-import { removeFromIndexPage, addCardToIndexPage } from '../../redux/mainPages/mainPagesAction'
+import { removeFromIndexPage, addCardToIndexPage } from '../../redux/pages/pagesAction'
 import { removeImg } from '../../redux/gallery/galleryAction'
 
 const ImgControlPanel = ({ 

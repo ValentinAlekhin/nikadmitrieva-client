@@ -3,18 +3,19 @@ import { Parallax } from 'react-parallax'
 import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
 import { connect } from 'react-redux'
-import { getIndexPage } from '../../redux/mainPages/mainPagesAction'
+import { getIndexPage } from '../../redux/pages/pagesAction'
 import { setCurrentPage } from '../../redux/navigation/navigationAction'
 import { BarLoader } from 'react-spinners'
 
 const Index = ({
   getPage, page: { cards },
-  loading, setCurrentPage
+  loading, setCurrentPage,
+  loaded
 }) => {
   
   useEffect(() => {
     (async function() {
-      await getPage()
+      if (!loaded) await getPage()
     })()
     setCurrentPage('index')
     // eslint-disable-next-line
@@ -50,8 +51,9 @@ const Index = ({
 
 function mapStateToProps(state) {
   return {
-    page: state.mainPages.indexPage,
-    loading: state.mainPages.loading,
+    page: state.pages.indexPage,
+    loading: state.pages.loading,
+    loaded: state.pages.indexPage.loaded,
   }
 }
 

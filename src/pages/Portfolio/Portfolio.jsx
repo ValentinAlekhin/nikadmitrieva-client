@@ -4,12 +4,13 @@ import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
-import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
+import { setCategory } from '../../redux/portfolio/portfolioAction'
+import { getPortfolioPage } from '../../redux/pages/pagesAction'
 import { setCurrentPage, setCurrentPath } from '../../redux/navigation/navigationAction'
 import { BarLoader } from 'react-spinners'
 
 const Portfolio = ({
-  data, loading, 
+  loading, page,
   match, getPage, isLogin,
   setCategory, category,
   setCurrentPage, setCurrentPath
@@ -28,12 +29,12 @@ const Portfolio = ({
     // eslint-disable-next-line
   }, [cat])
 
-
   const cards = () => {
-    if (!data.length) return <p>Нет данных</p>
+    const cards = page[cat].cards
+    if (!cards.length) return <p>Нет данных</p>
 
     return (
-      data.map(({ title, titleImg, route, _id }, index) => (
+      cards.map(({ title, titleImg, route, _id }, index) => (
         <GalleryCard
           key={index}
           title={title}
@@ -65,16 +66,15 @@ const Portfolio = ({
 function mapStateToProps(state) {
   return {
     category: state.portfolio.category,
-    data: state.portfolio.data,
-    loading: state.portfolio.loading,
-    error: state.portfolio.error,
-    isLogin: state.login.isLogin
+    loading: state.pages.loading,
+    isLogin: state.login.isLogin,
+    page: state.pages.portfolio,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPage: category => dispatch(getPage(category)),
+    getPage: () => dispatch(getPortfolioPage()),
     setCategory: category => dispatch(setCategory(category)),
     setCurrentPage: page => dispatch(setCurrentPage(page)),
     setCurrentPath: path => dispatch(setCurrentPath(path)),

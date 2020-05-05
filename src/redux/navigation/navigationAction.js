@@ -12,9 +12,9 @@ export const hideSideNav = () => ({ type: HIDE_SIDE_NAV })
 
 export const createTitles = () => {
   return (dispatch, getState) => {
-    const titlesNum = getState().navigation.sideNavTitles.length
+    const navTitles = getState().navigation.sideNavTitles
 
-    if (titlesNum > 0) return
+    if (typeof navTitles !== 'undefined' && navTitles.length > 0) return
 
     const titles = []
     const [ about, contact ] = getState().navigation.titles

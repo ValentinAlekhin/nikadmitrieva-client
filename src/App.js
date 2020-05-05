@@ -13,14 +13,17 @@ import Login from './components/Login/Login'
 import { connect } from 'react-redux';
 import { autoLogin } from './redux/login/loginAction';
 import Sidenav from './components/Sidenav/Sidenav';
+import { setPortfolioState } from './redux/pages/pagesAction';
 
-const App = ({ autoLogin }) => {
+const App = ({ autoLogin, setPortfolioState }) => {
   const turnOfContextMenu = e => {
     e.preventDefault()
   }
 
+
   useEffect(() => {
-    autoLogin()
+  setPortfolioState()
+  autoLogin()
     // eslint-disable-next-line
   }, [])
 
@@ -48,7 +51,8 @@ const App = ({ autoLogin }) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    autoLogin: () => dispatch(autoLogin())
+    autoLogin: () => dispatch(autoLogin()),
+    setPortfolioState: () => dispatch(setPortfolioState()),
   }
 }
 

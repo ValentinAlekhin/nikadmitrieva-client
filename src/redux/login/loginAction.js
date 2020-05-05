@@ -14,19 +14,25 @@ export const loadingEnd = () => ({ type: LOADING_END_L })
 
 export const autoLogin = () => {
   return async dispatch => {
-    const userId = localStorage.getItem('userId')
-    const token = localStorage.getItem('token')
+    try {
+      const userId = localStorage.getItem('userId')
+      const token = localStorage.getItem('token')
 
-    const response = await Axios.get('/api/auth', { headers: {
-      'Authorization': `Bearer ${token} ${userId}`,
-    } })
+      if (!userId || !token) return
 
-    if (response.status === 401) return dispatch(signOut())
+      await Axios.get('/api/auth', { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
 
-    dispatch({
-      type: AUTO_LOGIN,
-      token, userId
-    })
+      dispatch({
+        type: AUTO_LOGIN,
+        token, userId
+      })  
+    } catch (err) {
+      dispatch(signOut())
+      console.log(err)
+    }
+    
   }
 }
 

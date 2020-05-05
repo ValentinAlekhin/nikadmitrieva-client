@@ -4,15 +4,21 @@ import { connect } from 'react-redux'
 import classes from './Header.module.scss'
 import MenuIMG from './menu.svg'
 import DropMenu from '../../components/DropMenu/DropMenu'
+import { showSideNav } from '../../redux/navigation/navigationAction'
 
 const Header = ({
-  navigation: { logoTitle, titles, dropMenu}
+  navigation: { logoTitle, titles, dropMenu},
+  showSideNav
 }) => {
 
   return (
     <header className={classes.Header}>
       <div className={classes.MenuIcon}>
-        <img src={MenuIMG} alt="menu"/>
+        <img 
+          src={MenuIMG} 
+          alt="menu"
+          onClick={() => showSideNav()}
+        />
       </div>
       <h1>
         <Link to="/">{logoTitle}</Link>
@@ -48,8 +54,14 @@ const Header = ({
 
 function mapStateToProps(state) {
   return {
-    navigation: state.mainPages.navigation,
+    navigation: state.navigation,
   }
 }
 
-export default connect(mapStateToProps)(Header)
+function mapDispatchToProps(dispatch) {
+  return {
+    showSideNav: () => dispatch(showSideNav())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

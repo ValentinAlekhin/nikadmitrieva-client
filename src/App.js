@@ -12,6 +12,7 @@ import Gallery from './pages/Gallery/Gallery'
 import Login from './components/Login/Login'
 import { connect } from 'react-redux';
 import { autoLogin } from './redux/login/loginAction';
+import Sidenav from './components/Sidenav/Sidenav';
 
 const App = ({ autoLogin }) => {
   const turnOfContextMenu = e => {
@@ -28,6 +29,8 @@ const App = ({ autoLogin }) => {
       <Header/>
 
       <Login />
+
+      <Sidenav />
 
       <Switch>
         <Route path="/" exact component={Index}/>

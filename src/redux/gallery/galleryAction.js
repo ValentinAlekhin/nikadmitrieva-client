@@ -22,7 +22,7 @@ export const fetchGalleryError = error => ({ type: FETCH_GALLERY_ERROR, error })
 export const getPage = () => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
-    const [ , category, title ] = getState().mainPages.currentPath.split('/')
+    const [ , category, title ] = getState().navigation.currentPath.split('/')
     try { 
       const response = await Axios.get(`/api/gallery/?category=${category}&title=${title}`)
 
@@ -38,7 +38,7 @@ export const addImg = (id, images) => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login
-    const route = getState().mainPages.currentPath
+    const route = getState().navigation.currentPath
     try {
       const formData = new FormData()
       for (let i = 0; i < images.length; i++) {
@@ -63,7 +63,7 @@ export const removeImg = id => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login
-    const route = getState().mainPages.currentPath
+    const route = getState().navigation.currentPath
     try {
       const { category, titleUrl, _id } = getState().gallery.data
       await Axios.post('/api/gallery/remove-img', { id, galleryId: _id, category, titleUrl }, { headers: {

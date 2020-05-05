@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import { Parallax } from 'react-parallax'
 import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
 import { connect } from 'react-redux'
-import { getIndexPage, setCurrentPage } from '../../redux/mainPages/mainPagesAction'
+import { getIndexPage } from '../../redux/mainPages/mainPagesAction'
+import { setCurrentPage } from '../../redux/navigation/navigationAction'
 import { BarLoader } from 'react-spinners'
 
 const Index = ({
@@ -26,22 +27,24 @@ const Index = ({
   )
 
   return (
-    <div className={classes.IndexContainer}>
+    <Fragment>
       <Parallax bgImage={getRandomParallaxImg(0, 3)} strength={200}>
-          <div className={classes.Parallax} />
+        <div className={classes.Parallax} />
       </Parallax>
-      <div className={classes.CardsContainer}>
-        { cards.map(({route, title, titleImg, _id}, index) => (
-          <GallaryCard
-            key={index}
-            title={title}
-            img={titleImg}
-            link={route}
-            id={_id}
+      <div className={classes.IndexContainer}>
+        <div className={classes.CardsContainer}>
+          { cards.map(({route, title, titleImg, _id}, index) => (
+            <GallaryCard
+              key={index}
+              title={title}
+              img={titleImg}
+              link={route}
+              id={_id}
             />
-        )) }
+          )) }
+        </div>
       </div>
-    </div>
+    </Fragment>
   )    
 }
 

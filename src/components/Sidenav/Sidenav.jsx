@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import classes from './Sidenav.module.scss'
 import Backdrop from '../Backdrop/Backdrop'
+import { connect } from 'react-redux'
+import { hideSideNav, createTitles } from '../../redux/navigation/navigationAction'
 
-const Sidenav = props => {
+const Sidenav = ({
+  isOpen, hide, titles,
+  createTitles,
+}) => {
+
+  useEffect(() => createTitles(), [])
 
   const cls = [classes.Sidenav]
-  if (!props.isOpen) {
+  if (!isOpen) {
     cls.push(classes.close)
   }
+
+  const hideHandler = () => hide()
 
   return (
     <React.Fragment>
       <div className={cls.join(' ')}>
         <ul>
-          { props.titles.map(({route, title}, index) => (
+          { titles.map(({route, title}, index) => (
             <li key={index}>
-              <NavLink to={route} onClick={props.onClose}>
+              <NavLink to={route} onClick={hideHandler}>
                 { title }
               </NavLink>
             </li>
@@ -24,12 +33,26 @@ const Sidenav = props => {
         </ul>
       </div>
       <Backdrop 
-        onClick={props.onClose}
-        show={props.isOpen}
+        onClick={hideHandler}
+        show={isOpen}
         timeout={1000}
       />
     </React.Fragment>
   )
 }
 
-export default Sidenav
+function mapStateToProps(state) {
+  return {
+    isOpen: state.navigation.sideNavIsOpen,
+    titles: state.navigation.sideNavTitles,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    hide: () => dispatch(hideSideNav()),
+    createTitles: () => dispatch(createTitles()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidenav)

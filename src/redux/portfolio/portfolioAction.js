@@ -18,7 +18,7 @@ export const fetchPageError = error => ({ type: FETCH_PAGE_ERROR, error })
 export const getPage = () => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
-    const [ , category ] = getState().mainPages.currentPath.split('/')
+    const [ , category ] = getState().navigation.currentPath.split('/')
     try {
       const response = await Axios.get(`/api/category/?category=${category}`)
 
@@ -63,7 +63,6 @@ export const addCard = (category, title, img) => {
 }
 
 export const removeCard = id => {
-  console.log('port')
   return async (dispatch, getState) => {
     dispatch(loadingStart())
     const { userId, token } = getState().login

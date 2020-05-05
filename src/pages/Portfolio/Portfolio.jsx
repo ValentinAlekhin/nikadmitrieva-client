@@ -1,11 +1,11 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
 import { getPage, setCategory } from '../../redux/portfolio/portfolioAction'
-import { setCurrentPage, setCurrentPath } from '../../redux/mainPages/mainPagesAction'
+import { setCurrentPage, setCurrentPath } from '../../redux/navigation/navigationAction'
 import { BarLoader } from 'react-spinners'
 
 const Portfolio = ({
@@ -52,10 +52,10 @@ const Portfolio = ({
         ? <BarLoader css={{ width: '100%' }}/>
         : isLogin
           ? <div className={classes.CardsContainer}>
-            { cards() }
-            <AddGalleryCard category={category}/>
-          </div>
-          : cards() 
+              { cards() }
+              <AddGalleryCard category={category}/>
+            </div>
+          : <div className={classes.CardsContainer}>{ cards() }</div> 
       }
 
     </div>

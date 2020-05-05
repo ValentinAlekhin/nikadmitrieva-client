@@ -1,16 +1,16 @@
 @import '../../App.scss';
 
+.Parallax {
+  height: 200px;
+
+  @media (min-width: 1280px) {
+    height: 320px;
+  }
+}
+
 .IndexContainer {
   width: 96%;
   margin: 0 auto;
-
-  .Parallax {
-    height: 200px;
-
-    @media (min-width: 1280px) {
-      height: 320px;
-    }
-  }
 
   .CardsContainer {
     margin-top: 30px;

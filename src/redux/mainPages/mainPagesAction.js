@@ -1,13 +1,7 @@
 import { 
   LOADING_START_MP, LOADING_END_MP, FETCH_INDEX_PAGE_SUCCESS, 
-  SET_CURRENT_PAGE, SET_CURRENT_PATH
 } from "./actionTypes"
 import Axios from "axios"
-
-
-export const setCurrentPage = page => ({ type: SET_CURRENT_PAGE, page })
-
-export const setCurrentPath = path => ({ type: SET_CURRENT_PATH, path })
 
 export const loadingStart = () => ({ type: LOADING_START_MP })
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './ImgControlPanel.module.scss'
-import removeIcon from './delete.svg'
-import addToIndexPageIcon from './add_to_index_page.svg'
+import removeIcon from './icons/delete.svg'
+import addToIndexPageIcon from './icons/add_to_index_page.svg'
 import { connect } from 'react-redux'
 import { removeCard } from '../../redux/portfolio/portfolioAction'
 import { removeFromIndexPage, addCardToIndexPage } from '../../redux/mainPages/mainPagesAction'
@@ -62,7 +62,7 @@ const ImgControlPanel = ({
 
 function mapStateToProps(state) {
   return {
-    page: state.mainPages.currentPage,
+    page: state.navigation.currentPage,
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './GalleryItem.module.scss'
 import { connect } from 'react-redux'
-import ImgControlPanel from '../ImgControlPanel/ImgControlPanel'
+import ImgControlPanel from '../../UI/ImgControlPanel/ImgControlPanel'
 import { removeImg } from '../../redux/gallery/galleryAction'
 
 const GalleryItem = ({

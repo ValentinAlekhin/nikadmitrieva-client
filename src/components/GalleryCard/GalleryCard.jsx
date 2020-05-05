@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom'
 import classes from './GalleryCard.module.scss'
 import { connect } from 'react-redux'
 import { useState } from 'react'
-import ImgControlPanel from '../ImgControlPanel/ImgControlPanel'
+import ImgControlPanel from '../../UI/ImgControlPanel/ImgControlPanel'
 
 const GalleryCard = ({
   img, link, title, 

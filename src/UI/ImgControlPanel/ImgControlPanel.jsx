@@ -3,8 +3,8 @@ import classes from './ImgControlPanel.module.scss'
 import removeIcon from './icons/delete.svg'
 import addToIndexPageIcon from './icons/add_to_index_page.svg'
 import { connect } from 'react-redux'
-import { removeCard } from '../../redux/portfolio/portfolioAction'
-import { removeFromIndexPage, addCardToIndexPage } from '../../redux/pages/pagesAction'
+import { removeCard } from '../../redux/card/cardAction'
+import { removeFromIndexPage, addCardToIndexPage } from '../../redux/card/cardAction'
 import { removeImg } from '../../redux/gallery/galleryAction'
 
 const ImgControlPanel = ({ 

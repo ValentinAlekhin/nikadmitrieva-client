@@ -4,33 +4,33 @@ import classes from './Portfolio.module.scss'
 import GalleryCard from '../../components/GalleryCard/GalleryCard'
 import AddGalleryCard from '../../components/AddGalleryCard/AddGalleryCard'
 import { connect } from 'react-redux'
-import { setCategory } from '../../redux/portfolio/portfolioAction'
+import { setCategory } from '../../redux/card/cardAction'
 import { getPortfolioPage } from '../../redux/pages/pagesAction'
 import { setCurrentPage, setCurrentPath } from '../../redux/navigation/navigationAction'
 import { BarLoader } from 'react-spinners'
 
 const Portfolio = ({
-  loading, page,
-  match, getPage, isLogin,
-  setCategory, category,
-  setCurrentPage, setCurrentPath
+  loading, page, match, getPage, 
+  setCategory, setCurrentPage, 
+  setCurrentPath, isLogin,
 }) => {
 
-  const cat = match.params.category
+  const category = match.params.category
   const location = useLocation()
+
+  const { loaded, cards } = page[category]
 
   useEffect(() => {
     (async function() {
       await setCurrentPath(location.pathname)
-      await getPage()
+      if (!loaded) await getPage()
     })()
-    setCategory(cat)
+    setCategory(category)
     setCurrentPage('portfolio')
     // eslint-disable-next-line
-  }, [cat])
+  }, [category])
 
-  const cards = () => {
-    const cards = page[cat].cards
+  const renderCards = () => {
     if (!cards.length) return <p>Нет данных</p>
 
     return (
@@ -53,10 +53,10 @@ const Portfolio = ({
         ? <BarLoader css={{ width: '100%' }}/>
         : isLogin
           ? <div className={classes.CardsContainer}>
-              { cards() }
+              { renderCards() }
               <AddGalleryCard category={category}/>
             </div>
-          : <div className={classes.CardsContainer}>{ cards() }</div> 
+          : <div className={classes.CardsContainer}>{ renderCards() }</div> 
       }
 
     </div>
@@ -65,7 +65,6 @@ const Portfolio = ({
 
 function mapStateToProps(state) {
   return {
-    category: state.portfolio.category,
     loading: state.pages.loading,
     isLogin: state.login.isLogin,
     page: state.pages.portfolio,

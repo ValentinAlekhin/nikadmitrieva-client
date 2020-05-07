@@ -1,33 +1,14 @@
 import Axios from 'axios'
 import { 
-  LOADING_START_P, LOADING_END_P, FETCH_PAGE_SUCCESS, 
-  FETCH_PAGE_ERROR, SET_CATEGORY,
+  SET_CATEGORY,
 } from './actionTypes'
 import formData from 'form-data'
+import { 
+  getPortfolioPage,  getIndexPage, 
+  loadingStart, loadingEnd,
+} from '../pages/pagesAction'
 
 export const setCategory = category => ({ type: SET_CATEGORY, category })
-
-export const loadingStart = () => ({ type: LOADING_START_P })
-
-export const loadingEnd = () => ({ type: LOADING_END_P })
-
-export const fetchPageSuccess = data => ({ type: FETCH_PAGE_SUCCESS, data })
-
-export const fetchPageError = error => ({ type: FETCH_PAGE_ERROR, error })
-
-export const getPage = () => {
-  return async (dispatch, getState) => {
-    dispatch(loadingStart())
-    const [ , category ] = getState().navigation.currentPath.split('/')
-    try {
-      const response = await Axios.get(`/api/category/?category=${category}`)
-
-      dispatch(fetchPageSuccess(response.data.cards))
-    } catch (err) {
-      dispatch(fetchPageError(err))
-    }
-  }
-}
 
 export const addCard = (category, title, img) => {
   return async (dispatch, getState) => {
@@ -55,7 +36,7 @@ export const addCard = (category, title, img) => {
         'Authorization': `Bearer ${token} ${userId}`,
       } })
 
-      await dispatch(getPage())
+      await dispatch(getPortfolioPage())
     } catch (err) {
       dispatch(loadingEnd())
     }
@@ -70,8 +51,41 @@ export const removeCard = id => {
       await Axios.post('api/category/remove', { id, userId }, { headers: {
         'Authorization': `Bearer ${token} ${userId}`,
       } })
-      const category = getState().category
-      dispatch(getPage(category))
+      dispatch(getPortfolioPage())
+    } catch (err) {
+      dispatch(loadingEnd())
+      console.log(err)
+    }
+  }
+}
+
+export const addCardToIndexPage = id => {
+  return async (dispatch, getState) => {
+    const { userId, token } = getState().login
+    try {
+      await Axios.post('/api/main-pages/add-card-to-index', { id }, { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
+      dispatch(loadingEnd())
+    } catch (err) {
+      dispatch(loadingEnd())
+      console.log(err)
+    }
+  }
+}
+
+export const removeFromIndexPage = id => {
+  return async (dispatch, getState) => {
+    dispatch(loadingStart())
+    const { userId, token } = getState().login
+    try {
+      const response = await Axios.post('/api/main-pages/remove-card-from-index', { id }, { headers: {
+        'Authorization': `Bearer ${token} ${userId}`,
+      } })
+
+      if (response.status === 200) return dispatch(getIndexPage())
+
+      dispatch(loadingEnd())
     } catch (err) {
       dispatch(loadingEnd())
       console.log(err)

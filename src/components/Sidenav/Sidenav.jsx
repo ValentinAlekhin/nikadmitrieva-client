@@ -10,7 +10,9 @@ const Sidenav = ({
   createTitles,
 }) => {
 
-  useEffect(() => createTitles(), [])
+  useEffect(() => createTitles(), 
+  // eslint-disable-next-line 
+  [])
 
   const cls = [classes.Sidenav]
   if (!isOpen) {

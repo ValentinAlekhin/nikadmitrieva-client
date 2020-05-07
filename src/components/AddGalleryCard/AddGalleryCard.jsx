@@ -3,7 +3,7 @@ import classes from './AddGalleryCard.module.scss'
 import whiteImg from './white.png'
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import { addCard } from '../../redux/portfolio/portfolioAction'
+import { addCard } from '../../redux/card/cardAction'
 
 const AddGalleryCard = ({ category, addCard }) => {
 

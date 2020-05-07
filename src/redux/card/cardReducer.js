@@ -4,13 +4,10 @@ import {
 } from "./actionTypes"
 
 const initialState = {
-  loading: true,
-  category: '',
-  data: [],
   error: null
 }
 
-export const PortfolioReducer = (state = initialState, action) => {
+export const CardReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CATEGORY:
       return {

@@ -1,44 +1,70 @@
-import React, { Component } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import { Parallax } from 'react-parallax'
 import classes from './Index.module.scss'
 import GallaryCard from '../../components/GalleryCard/GalleryCard'
-import Store from '../../store/store'
+import { connect } from 'react-redux'
+import { getIndexPage } from '../../redux/pages/pagesAction'
+import { setCurrentPage } from '../../redux/navigation/navigationAction'
+import { BarLoader } from 'react-spinners'
 
-export default class Index extends Component {
-  state = {
-    gallaryCards: Store.getIndexPageCards(
-      ['Копии', 'other'],
-      ['Пленер', 'drawing'],
-      ['Мама', 'photo'], 
-      ['Натюрморты', 'painting'],
-      ['Цветы', 'painting'],
-      ['Папа', 'photo'],
-      ['Натюрморт с бутылкой', 'photo'],
-      ['Пыль', 'photo'],
-      ['Настя', 'photo'],
-     )
-  }
+const Index = ({
+  getPage, page: { cards },
+  loading, setCurrentPage,
+  loaded
+}) => {
+  
+  useEffect(() => {
+    (async function() {
+      if (!loaded) await getPage()
+    })()
+    setCurrentPage('index')
+    // eslint-disable-next-line
+  }, [])
 
-  render() {
-    return (
+  if (loading) return (
+    <div className={classes.IndexContainer}>
+      <BarLoader css={{ width: '100%' }}/>
+    </div>
+  )
+
+  return (
+    <Fragment>
+      <Parallax bgImage={getRandomParallaxImg(0, 3)} strength={200}>
+        <div className={classes.Parallax} />
+      </Parallax>
       <div className={classes.IndexContainer}>
-        <Parallax bgImage={getRandomParallaxImg(0, 3)} strength={200}>
-           <div className={classes.Parallax} />
-        </Parallax>
         <div className={classes.CardsContainer}>
-          { this.state.gallaryCards.map(({route, title, imgArr}, index) => (
+          { cards.map(({route, title, titleImg, _id}, index) => (
             <GallaryCard
               key={index}
               title={title}
-              img={imgArr[0]}
+              img={titleImg}
               link={route}
-              />
+              id={_id}
+            />
           )) }
         </div>
       </div>
-    )    
+    </Fragment>
+  )    
+}
+
+function mapStateToProps(state) {
+  return {
+    page: state.pages.indexPage,
+    loading: state.pages.loading,
+    loaded: state.pages.indexPage.loaded,
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPage: () => dispatch(getIndexPage()),
+    setCurrentPage: page => dispatch(setCurrentPage(page)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index)
 
 function getRandomParallaxImg(min, max) {
   let rand = min + Math.random() * (max + 1 - min);

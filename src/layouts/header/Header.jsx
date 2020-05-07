@@ -1,135 +1,67 @@
-import React, { Component } from 'react'
-import {NavLink} from 'react-router-dom'
+import React from 'react'
+import { NavLink, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import classes from './Header.module.scss'
 import MenuIMG from './menu.svg'
-import Routs from '../../store/Routs'
-import Sidenav from '../../components/Sidenav/Sidenav'
-export default class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      logoTitle: 'Ника Дмитриева',
-      showDropMenu: false,
-      sidenavOpen: false,
-      sidenavTitles: Routs.getSidenavNameAndRouts(),
-      menuTitles: Routs.getNavNameAndRouts()
-    }
-  }
+import DropMenu from '../../components/DropMenu/DropMenu'
+import { showSideNav } from '../../redux/navigation/navigationAction'
 
-  toggleDropMenu = () => {
-    this.setState({
-      showDropMenu: !this.state.showDropMenu
-    })
-  }
-
-  dropMenuOn = () => {
-    this.setState({
-      showDropMenu: true
-    })
-  }
-  dropMenuOff = () => {
-    this.setState({
-      showDropMenu: false
-    })
-  }
-
-  toggleMenuHandler = () => {
-    this.setState({
-      sidenavOpen: !this.state.sidenavOpen
-    })
-  }
-
-  render() {
-    return (
-      <header className={classes.Header}>
-        <div className={classes.MenuIcon}>
-          <img onClick={this.toggleMenuHandler} src={MenuIMG} alt="menu"/>
-        </div>
-        <h1>
-          <NavLink to="/">{this.state.logoTitle}</NavLink>
-        </h1>
-        <nav className={classes.Nav}>
-          <ul className={classes.NavContainer}>
-            {this.state.menuTitles.map(({route, title, dropMenu}, index) => (
-              dropMenu ? <NavMenuItem 
-                link={route} 
-                title={title} 
-                key={index}
-                dropMenuOn={this.dropMenuOn}
-                toggleDropMenu={this.toggleDropMenu}
-                children={
-                  <DropMenu 
-                    showDropMenu={this.state.showDropMenu} 
-                    dropMenuTitles={dropMenu}
-                    dropMenuOff={this.dropMenuOff}
-                  />
-                }/> :
-              <NavMenuItem 
-                link={route} 
-                title={title} 
-                key={index}/>
-            ))}
-           </ul>
-        </nav>
-        
-        <Sidenav 
-          isOpen={this.state.sidenavOpen} 
-          titles={this.state.sidenavTitles}
-          onClose={this.toggleMenuHandler}
-        />
-
-      </header>
-    )
-  }
-}
-
-const NavMenuItem = props => (
-  <li 
-    className={classes.NavItem}
-    onClick={props.toggleDropMenu}
-    onMouseEnter={props.dropMenuOn}
-  >
-
-    {
-      props.link 
-        ? <NavLink 
-            className={classes.NavLink}
-            to={props.link}
-          >
-            {props.title}
-          </NavLink>
-          : <React.Fragment>
-            <span 
-              className={classes.NavLink}
-            >
-              {props.title}
-            </span>
-              { props.children }
-            </React.Fragment>
-    }
-
-  </li>
-)
-
-const DropMenu = props => { 
-  const cls = [classes.DropContainer]
-  if (props.showDropMenu) {
-    cls.push(classes.Show)
-  } else {
-    cls.push(classes.Close)
-  }
+const Header = ({
+  navigation: { logoTitle, titles, dropMenu},
+  showSideNav
+}) => {
 
   return (
-    <div className={cls.join(' ')} onMouseLeave={props.dropMenuOff}>
-      <ul className={classes.DropMenu} onClick={props.dropMenuOff}>
-        { props.dropMenuTitles.map(({route, title}, index) => (
-          <li className={classes.DropItem} key={index}>
-            <NavLink className={classes.DropLink} to={route}>
-              { title }
+    <header className={classes.Header}>
+      <div className={classes.MenuIcon}>
+        <img 
+          src={MenuIMG} 
+          alt="menu"
+          onClick={() => showSideNav()}
+        />
+      </div>
+      <h1>
+        <Link to="/">{logoTitle}</Link>
+      </h1>
+      <nav className={classes.Nav}>
+        <ul className={classes.NavContainer}>
+
+          <li className={classes.NavItem}>
+            <NavLink 
+              className={classes.NavLink} 
+              to={titles[0].route}
+            >
+              { titles[0].title }
             </NavLink>
           </li>
-        )) }
-      </ul>
-    </div>
+
+          <DropMenu title={dropMenu.title} subTitles={dropMenu.subTitles}/>
+
+          <li className={classes.NavItem}>
+            <NavLink 
+              className={classes.NavLink} 
+              to={titles[1].route}
+            >
+              { titles[1].title }
+            </NavLink>
+            </li>
+         
+          </ul>
+      </nav>
+    </header>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    navigation: state.navigation,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showSideNav: () => dispatch(showSideNav())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

@@ -1,0 +1,37 @@
+@import "../../App.scss";
+
+
+.DropMenu {
+  flex-flow: column;
+  position: relative;
+
+  .DropTitle {
+    color: lighten($font-color, 35%);
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      color: $font-color;
+    }
+  }
+
+  .DropContainer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 10px;
+
+    .DropItem {
+      margin-bottom: 4px;
+      text-align: center;
+  
+      .DropLink {
+        color: lighten($font-color, 35%);
+        transition: all ease-in-out 0.2s;
+  
+        &:hover {
+          color: $font-color;
+        }
+      }
+    }
+  } 
+}

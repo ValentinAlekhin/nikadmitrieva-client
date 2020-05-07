@@ -51,9 +51,6 @@
       width: 400px;
       display: flex;
       justify-content: space-between;
-      // display: grid;
-      // grid-template-columns: repeat(3, auto);
-      // grid-column-gap: 100px;
       justify-content: space-between;
       @include font-stack('Proxima Nova');
       font-weight: 600;
@@ -72,40 +69,6 @@
 
           &:hover {
             color: $font-color;
-          }
-        }
-
-        .DropContainer {
-          position: absolute;
-
-          .DropMenu {
-            padding-top: 10px;
-            position: relative;
-            width: 100%;
-            // display: none;
-            flex-flow: column;
-            text-align: center;
-
-            .DropItem {
-              margin-bottom: 4px;
-
-              .DropLink {
-                color: lighten($font-color, 35%);
-                transition: all ease-in-out 0.2s;
-
-                &:hover {
-                  color: $font-color;
-                }
-              }
-            }
-          }
-
-          &.Show {
-            display: block;
-          }
-
-          &.Close {
-            display: none;
           }
         }
       }

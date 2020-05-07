@@ -1,19 +1,38 @@
 import React from 'react'
 import classes from './Footer.module.scss'
-import { useContext } from 'react'
-import { LoginContext } from '../../context/login/loginContext'
+import { connect } from 'react-redux'
+import { showLogin, signOut } from '../../redux/login/loginAction'
 
-export default () => {
-
-  const { show } = useContext(LoginContext)
+const Footer = ({ showLogin, logOut, isLogin }) => {
 
   const date = new Date().getFullYear()
 
+  const doubleClickHandler = () => {
+    if (isLogin) {
+      logOut()
+    } else showLogin()
+  }
+
   return (
     <footer className={classes.Footer}>
-      <span onDoubleClick={show}>
+      <span onDoubleClick={doubleClickHandler}>
       © { date } Ника Дмитриева
       </span>
     </footer>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    isLogin: state.login.isLogin,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showLogin: () => dispatch(showLogin()),
+    logOut: () => dispatch(signOut())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

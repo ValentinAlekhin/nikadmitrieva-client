@@ -1,71 +1,88 @@
-import React, { Component } from 'react'
+import React, { useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import classes from './Gallery.module.scss'
-import store from '../../store/store'
+import { connect } from 'react-redux'
+import { setCurrentPath, setCurrentPage } from '../../redux/navigation/navigationAction'
+import { getPage, createGrid, setImages } from '../../redux/gallery/galleryAction'
+import AddImg from '../../components/AddImg/AddImg'
 import GalleryItem from '../../components/GalleryItem/GalleryItem'
+import { BarLoader } from 'react-spinners'
 
-export default class Gallery extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      colls: this.setColls(),
-      imgArr: store.getImgArr(
-        props.match.params.category,
-        props.match.params.gallery
-      )
-    }
-  }
+const Gallery = ({
+  data: { title, description, _id },
+  loading, isLogin, getPage, createGrid, 
+  images, collsHeight, setPath, setPage,
+}) => {
 
-  componentDidMount() {
-    window.scrollTo(0, 0)
+  const loacation = useLocation()
+  const containerWitdth = useRef(null)
 
+  useEffect(() => {
+    (async function() {
+      await setPath(loacation.pathname)
+      await getPage()
+    })()
+    setPage('gallery')
+    createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
     window.addEventListener('resize', () => {
-      this.setState({ colls: this.setColls() })
+      console.log('resize')
+      createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
+      setImages()
     })
-  }
+    // eslint-disable-next-line
+  }, [])
 
-  setColls() {
-    const windowWidth = window.innerWidth
+  const grid = () => {
+    if (!images.length) return <p>No data</p>
 
-    switch (true) {
-      case windowWidth <= 600:
-        return 1
-      case windowWidth <= 1280:
-        return 2
-      case windowWidth <= 1920:
-        return 3
-      default:
-        return 4
-    }
-  }
-
-  createColls = () => {
-    let colls = []
-    for (let coll = 0; coll < this.state.colls; coll++) {
-    colls[coll] = <div key={coll}>{ this.createColl(coll) }</div>
-    }
-
-    return colls
-  }
-
-  createColl = (currenColl) => {
-    let coll = []
-    for (let i = currenColl; i < this.state.imgArr.length; i+= this.state.colls) {
-      coll[i] = <GalleryItem key={i} img={this.state.imgArr[i]}/>
-    }
-
-    return coll
-  }
-
-  render() {
     return (
-      <div className={classes.Gallery}>
-        <h4 className={classes.Title}>
-          { this.props.title }
-        </h4>
-        <div className={classes.Grid}>
-          { this.createColls() }
-        </div>
-    </div>
+      <div 
+        className={classes.Grid} 
+        ref={containerWitdth}
+        style={{height: collsHeight}}
+      >
+        { images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>) }
+      </div>
     )
   }
+
+  if(loading) return (
+    <div className={classes.Gallery}>
+      <BarLoader css={{ width: '100%' }}/>
+      <div className={classes.Grid} ref={containerWitdth}></div>
+    </div>
+  )
+
+  return (
+    <div className={classes.Gallery}>
+      <h4 className={classes.Title}>
+        { title }
+      </h4>
+      { description && <p>{ description }</p> }
+      { grid() }
+      { isLogin && <AddImg id={_id} /> }
+    </div>
+  )
 }
+
+function mapStateToProps(state) {
+  return {
+    loading: state.gallery.loading,
+    isLogin: state.login.isLogin,
+    images: state.gallery.grid.images,
+    collsHeight: state.gallery.grid.collsHeight,
+    data: state.gallery.data,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPage: (category, title) => dispatch(getPage(category, title)),
+    createGrid: (windowWitdth, containerWitdth, gap) => dispatch(createGrid(windowWitdth, containerWitdth, gap)),
+    setImages: () => dispatch(setImages()),
+    setPage: page => dispatch(setCurrentPage(page)),
+    setPath: path => dispatch(setCurrentPath(path)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery)

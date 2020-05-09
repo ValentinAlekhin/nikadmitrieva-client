@@ -29,7 +29,7 @@ const Index = ({
 
   return (
     <Fragment>
-      <Parallax bgImage={getRandomParallaxImg(0, 3)} strength={200}>
+      <Parallax bgImage={getRandomParallaxImg(0, 3)} bgImageAlt="Parallax" strength={200}>
         <div className={classes.Parallax} />
       </Parallax>
       <div className={classes.IndexContainer}>

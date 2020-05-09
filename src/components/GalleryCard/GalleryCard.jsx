@@ -33,9 +33,9 @@ const GalleryCard = ({
         </picture>
       </NavLink>
       <NavLink className={classes.GalerryTitle} to={link}>
-        <span>
+        <h4>
           { title }
-        </span>
+        </h4>
       </NavLink>
     </div>
   )

@@ -29,7 +29,7 @@ const GalleryItem = ({
       <picture className={classes.Img}>
         <source srcSet={path.webp} type="image/webp" />
         <source srcSet={path.jpg} type="image/jpg" />
-        <img className={classes.Img} src={path.jpg} alt="Gallery Item"/>
+        <img className={classes.Img} src={path.jpg} alt={id}/>
       </picture>
     </div>
   )

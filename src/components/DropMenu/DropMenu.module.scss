@@ -8,6 +8,7 @@
   .DropTitle {
     color: lighten($font-color, 35%);
     transition: all ease-in-out 0.2s;
+    cursor: pointer;
 
     &:hover {
       color: $font-color;
@@ -32,6 +33,21 @@
           color: $font-color;
         }
       }
+    }
+
+    &.enter {
+      opacity: 0;
+    }
+    &.enter-active {
+      opacity: 1;
+      transition: opacity 220ms;
+    }
+    &.exit {
+      opacity: 1;
+    }
+    &.exit-active {
+      opacity: 0;
+      transition: opacity 220ms;
     }
   } 
 }

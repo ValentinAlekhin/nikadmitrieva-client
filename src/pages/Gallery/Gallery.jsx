@@ -25,7 +25,6 @@ const Gallery = ({
     setPage('gallery')
     createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
     window.addEventListener('resize', () => {
-      console.log('resize')
       createGrid(window.innerWidth, containerWitdth.current.offsetWidth, 20)
       setImages()
     })
@@ -35,15 +34,7 @@ const Gallery = ({
   const grid = () => {
     if (!images.length) return <p>No data</p>
 
-    return (
-      <div 
-        className={classes.Grid} 
-        ref={containerWitdth}
-        style={{height: collsHeight}}
-      >
-        { images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>) }
-      </div>
-    )
+    return images.map(img => <GalleryItem key={img.id} img={img} isLogin={isLogin}/>)
   }
 
   if(loading) return (
@@ -59,7 +50,13 @@ const Gallery = ({
         { title }
       </h4>
       { description && <p>{ description }</p> }
-      { grid() }
+      <div 
+        className={classes.Grid} 
+        ref={containerWitdth}
+        style={{height: collsHeight}}
+      >
+        { grid() }
+      </div>
       { isLogin && <AddImg id={_id} /> }
     </div>
   )

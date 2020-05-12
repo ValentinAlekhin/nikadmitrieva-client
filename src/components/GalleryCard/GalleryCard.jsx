@@ -15,7 +15,7 @@ const GalleryCard = ({
   const [hover, setHover] = useState(false)
   const [imgLoad, setImgLoad] = useState(false)
 
-  const classNames={
+  const classNames = {
     enter: classes.enter,
     enterActive: classes['enter-active'],
     exit: classes.exit,

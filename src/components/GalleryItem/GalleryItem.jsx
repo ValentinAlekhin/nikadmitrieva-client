@@ -3,6 +3,7 @@ import classes from './GalleryItem.module.scss'
 import { connect } from 'react-redux'
 import ImgControlPanel from '../../UI/ImgControlPanel/ImgControlPanel'
 import { removeImg } from '../../redux/gallery/galleryAction'
+import { CSSTransition } from 'react-transition-group'
 
 const GalleryItem = ({
   img: { id, path, sizes, position },
@@ -10,12 +11,43 @@ const GalleryItem = ({
 }) => {
 
   const [show, setShow] = useState(false)
+  const [imgLoad, setImgLoad] = useState(false)
 
   const style = {
     top: position.top,
     left: position.left,
     width: sizes.width,
     height: sizes.height
+  }
+
+  const classNames = {
+    enter: classes.enter,
+    enterActive: classes['enter-active'],
+    exit: classes.exit,
+    exitActive: classes['exit-active'],
+  }
+
+  const renderPicture = () => {
+    const webpSrc = []
+    const jpegSrc = []
+
+    Object.entries(path.main).forEach(([tag, { webp, jpeg }]) => {
+      webpSrc.push(`${webp} ${tag}`)
+      jpegSrc.push(`${jpeg} ${tag}`)
+    })
+
+    return (
+      <picture>
+        <source srcSet={webpSrc.join(', ')} type="image/webp"/>
+        <source srcSet={jpegSrc.join(', ')} type="image/jpeg"/>
+        <img 
+          src={path.main['800w'].jpeg} 
+          className={classes.ImgItem} 
+          alt={id}
+          onLoad={() => setImgLoad(true)}
+          />
+      </picture>
+    )
   }
 
   return (
@@ -26,11 +58,20 @@ const GalleryItem = ({
       style={style}
     >
       { isLogin && <ImgControlPanel show={show} id={id}/> }
-      <picture className={classes.Img}>
-        <source srcSet={path.webp} type="image/webp" />
-        <source srcSet={path.jpg} type="image/jpg" />
-        <img className={classes.Img} src={path.jpg} alt={id}/>
-      </picture>
+      <CSSTransition
+          in={!imgLoad}
+          timeout={300}
+          classNames={classNames}
+          unmountOnExit
+          mountOnEnter
+        >
+          <img 
+            srcSet={path.placeholder} 
+            className={classes.ImgPlaceholder} 
+            alt={id}
+          />
+        </CSSTransition>
+        { renderPicture() }
     </div>
   )
 }

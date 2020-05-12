@@ -36,7 +36,7 @@ const GalleryCard = ({
         <source srcSet={webpSrc.join(', ')} type="image/webp"/>
         <source srcSet={jpegSrc.join(', ')} type="image/jpeg"/>
         <img 
-          src={main['800w'].jpeg} 
+          src={main['400w'].jpeg} 
           className={classes.ImgItem} 
           alt={title}
           onLoad={() => setImgLoad(true)}

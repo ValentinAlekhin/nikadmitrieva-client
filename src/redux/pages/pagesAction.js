@@ -16,7 +16,9 @@ export const getIndexPage = () => {
     try {
       const response = await Axios.get('/api/main-pages/index')
 
-      dispatch({ type: FETCH_INDEX_PAGE_SUCCESS, data: response.data.cards })
+      const cards = response.data.cards.sort((a, b) => a.index.order - b.index.order)
+
+      dispatch({ type: FETCH_INDEX_PAGE_SUCCESS, data: cards })
     } catch (err) {
       console.log(err)
     }

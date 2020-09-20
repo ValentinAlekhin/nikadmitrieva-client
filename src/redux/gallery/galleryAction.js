@@ -22,9 +22,9 @@ export const fetchGalleryError = error => ({ type: FETCH_GALLERY_ERROR, error })
 export const getPage = () => {
   return async (dispatch, getState) => {
     dispatch(loadingStart())
-    const [ , category, title ] = getState().navigation.currentPath.split('/')
+    const [ , category, _id ] = getState().navigation.currentPath.split('/')
     try { 
-      const response = await Axios.get(`/api/gallery/?category=${category}&title=${title}`)
+      const response = await Axios.get(`/api/gallery/?category=${category}&_id=${_id}`)
 
       dispatch(fetchGallerySuccess(response.data.gallery))
       dispatch(setImages())

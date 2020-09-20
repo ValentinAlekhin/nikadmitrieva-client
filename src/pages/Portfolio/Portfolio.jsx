@@ -34,12 +34,12 @@ const Portfolio = ({
     if (!cards.length) return <p>Нет данных</p>
 
     return (
-      cards.map(({ title, titleImg, route, _id }, index) => (
+      cards.map(({ title, titleImg, _id }, index) => (
         <GalleryCard
           key={index}
           title={title}
           img={titleImg}
-          link={route}
+          link={`/${category}/${_id}`}
           id={_id}
         />
       ))

@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 
-FROM nginx:alpine
+FROM nginx
 
 #!/bin/sh
 
@@ -27,6 +27,15 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy from the stahg 1
 COPY --from=builder /react-ui/build /usr/share/nginx/html
 
-EXPOSE 3000 80
+# Get ssl
+RUN apt-get update \
+ && apt-get install software-properties-common -y \
+ && add-apt-repository universe \
+ && add-apt-repository ppa:certbot/certbot \
+ && apt-get update \
+ && apt-get install certbot python3-certbot-nginx -y \
+ && certbot --nginx -d nikadmitrieva.ru
+
+EXPOSE 3000 80 443
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

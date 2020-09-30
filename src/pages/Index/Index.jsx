@@ -34,12 +34,12 @@ const Index = ({
       </Parallax>
       <div className={classes.IndexContainer}>
         <div className={classes.CardsContainer}>
-          { cards.map(({route, title, titleImg, _id}, index) => (
+          { cards.map(({route, title, titleImg, _id, category}, index) => (
             <GallaryCard
               key={index}
               title={title}
               img={titleImg}
-              link={route}
+              link={`/${category}/${_id}`}
               id={_id}
             />
           )) }
